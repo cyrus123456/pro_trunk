@@ -1,0 +1,7 @@
+<el-select
+    v-model="val"
+    placeholder="选择险种"
+    @change="change"
+>
+    <el-option v-for="(item,index) in mapList.riskList" :label="item.value + '-' + item.label" :value="item" :key="index"></el-option>
+</el-select>

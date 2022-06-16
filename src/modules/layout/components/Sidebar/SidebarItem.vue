@@ -1,0 +1,122 @@
+<template>
+  <div class="menu-wrapper">
+    <template v-for="item in routes">
+      <div v-if="item.menuID">
+        <div v-if="item.utiMenuDtos.length===0" :key="item.menuID" @click="setFrameLocal(item)">
+          <el-menu-item :index="item.menuID" :class="{'submenu-title-noDropdown':!isNest}">
+            <svg-icon v-if="item.image" :icon-class="item.image"></svg-icon>
+            <span v-if="item.menuCName" slot="title">{{item.menuCName}}</span>
+          </el-menu-item>
+        </div>
+
+        <el-submenu  v-else :index="item.menuID" :key="item.menuID">
+          <template slot="title">
+            <svg-icon v-if="item.image" :icon-class="item.image"></svg-icon>
+            <span v-if="item.menuCName" slot="title">{{item.menuCName}}</span>
+          </template>
+
+          <template v-for="child in item.utiMenuDtos">
+            <sidebar-item :is-nest="true" class="nest-menu" v-if="child.utiMenuDtos&&child.utiMenuDtos.length>0" :routes="[child]" :key="child.menuID"></sidebar-item>
+
+            <div v-else :key="child.menuID" @click="setFrameLocal(child)">
+              <el-menu-item :index="child.menuID" >
+                <svg-icon v-if="child.image" :icon-class="child.image"></svg-icon>
+                <span v-if="child.menuCName" slot="title">{{child.menuCName}}</span>
+              </el-menu-item>
+            </div>
+          </template>
+        </el-submenu>
+      </div>
+      <div v-else>
+        <div v-if="item.children.length===0" :key="item.name" @click="jump(item)">
+          <el-menu-item :index="item.name" :class="{'submenu-title-noDropdown':!isNest}">
+            <svg-icon v-if="item.meta.icon" :icon-class="item.meta.icon"></svg-icon>
+            <span v-if="item.name" slot="title">{{generateTitle(item.children[0].meta.title)}}</span>
+          </el-menu-item>
+        </div>
+
+        <el-submenu  v-else :index="item.name" :key="item.name">
+          <template slot="title">
+            <svg-icon v-if="item.meta.icon" :icon-class="item.meta.icon"></svg-icon>
+            <span v-if="item.name" slot="title">{{generateTitle(item.meta.title)}}</span>
+          </template>
+
+          <template v-for="child in item.children">
+            <sidebar-item :is-nest="true" class="nest-menu" v-if="child.children&&child.children.length>0" :routes="[child]" :key="child.name"></sidebar-item>
+
+            <div v-else :key="child.name" @click="jump(item,child)">
+              <el-menu-item :index="child.name" >
+                <svg-icon v-if="child.meta.image" :icon-class="child.meta.image"></svg-icon>
+                <span v-if="child.name" slot="title">{{generateTitle(child.meta.title)}}</span>
+              </el-menu-item>
+            </div>
+          </template>
+        </el-submenu>
+      </div>
+    </template>
+  </div>
+</template>
+
+<script>
+import { generateTitle } from '@/utils/i18n'
+import {
+  setStore
+  // getStore,
+  // removeStore
+} from '@/utils/store'
+export default {
+  name: 'SidebarItem',
+  props: {
+    routes: {
+      type: Array
+    },
+    isNest: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    generateTitle,
+    hasOneShowingChildren (children) {
+      const showingChildren = children.filter(item => {
+        return !item.hidden
+      })
+      if (showingChildren.length === 1) {
+        return true
+      }
+      return false
+    },
+    // generateTitle,
+    setFrameLocal (item) {
+      setStore({
+        name: 'frameData',
+        content: item
+      })
+      console.log('item', item)
+      this.$router.push({path: '/subsystem/' + item.menuID})
+      // this.$router.push({path: '/subsystem', query: { src: item.url}})
+    },
+    // generateTitle,
+    jump (item, child) {
+      console.log('item', "item.path+'/'+item.children[0].path")
+      if (child) {
+        this.$router.push({path: '/' + item.path + '/' + child.path})
+      } else {
+        this.$router.push({path: '/' + item.path + '/' + item.children[0].path})
+      }
+
+      // this.$router.push({path: '/subsystem', query: { src: item.url}})
+    }
+  },
+  created () {
+    // for (const o in this.routes) {
+    //   const obj = this.routes[o]
+    //   if (obj.path.indexOf('myiframe') >= 0) {
+    //     // obj.children[0].path = 'urlPath?src=https://www.baidu.com'
+    //     obj.children[0].path = 'urlPath?src=http://10.63.192.19:8082/yggcd/#/templates/?gcdparam=bdca1873842045c224ff00f6ee508c7870160b123e6dbb22ac731caf77eb28bb524f02b930375c767547aa32fdf456aa50634fd280294db9&menuId=64'
+    //
+    //   }
+    // }
+  }
+}
+</script>

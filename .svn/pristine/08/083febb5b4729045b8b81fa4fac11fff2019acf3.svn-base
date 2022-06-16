@@ -1,0 +1,163 @@
+<template>
+  <!--<iframe v-if="$route.query.src" :src='$route.query.src' class="iframe" ref="iframe"></iframe>-->
+  <iframe  :src="urlPath" class="iframe" ref="iframe"></iframe>
+  <!--<iframe  src="http://10.63.192.89:8082/yggcd/#/templates/?gcdparam=bdca1873842045c224ff00f6ee508c7870160b123e6dbb22ac731caf77eb28bb524f02b930375c767547aa32fdf456aa50634fd280294db9&menuId=64" class="iframe" ref="iframe"></iframe>-->
+  <!--<div @click="jump">{{urlPath}}</div>-->
+</template>
+
+<script>
+import { mapState, mapGetters } from 'vuex'
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+import {
+  // setStore,
+  getStore,
+  // removeStore
+} from '@/utils/store'
+export default {
+  name: 'nxframe',
+  data() {
+    return {
+      urlPath: '' // iframe src 路径
+    }
+  },
+  created() {
+    console.log('eeeeee',this.$route)
+    NProgress.configure({ showSpinner: false })
+  },
+  mounted() {
+    // this.load()
+    this.iframeInit()
+    this.resize()
+  },
+  props: ['routerPath'],
+  watch: {
+    // $route: function() {
+    //   this.load()
+    // },
+    // routerPath: function(val) {
+    //   // 监听routerPath变化，改变src路径
+    //   this.urlPath = this.getUrlPath()
+    // }
+
+    // $route: function (to, from) {
+    //   console.log('对路由变化作出响应...', to)
+    // }
+    $route: {
+      handler: function(to, form){
+        console.log('对路由变化作出响应...', to)
+        this.load()
+
+      },
+      immediate: true//立即先去执行handler方法
+    }
+  },
+  beforeRouteUpdate (to, from, next) {
+    // console.log('在当前路由改变，但是该组件被复用时调用...',to)
+    next()
+    // 在当前路由改变，但是该组件被复用时调用
+    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+    // 可以访问组件实例 `this`
+  },
+  components: {
+    ...mapGetters(['tagList']),
+    tagListNum: function() {
+      return this.tagList.length !== 0
+    },
+    ...mapState({
+      name: state => state.user.name
+    })
+  },
+  methods: {
+    jump() {
+      this.$router.push({name:'subsystem', params:{subFrame: '9999999'}})
+    },    // 显示等待框
+    show() {
+      NProgress.start()
+    },
+    // 隐藏等待狂
+    hide() {
+      NProgress.done()
+    },
+    // 加载浏览器窗口变化自适应
+    resize() {
+      window.onresize = () => {
+        this.iframeInit()
+      }
+    },
+    // 加载组件
+    load() {
+      this.show()
+     /* var flag = true // URL是否包含问号
+      if (this.$route.query.src.indexOf('?') === -1) {
+        flag = false
+      }
+      var list = []
+      for (var key in this.$route.query) {
+        if (key !== 'src' && key !== 'name') {
+          list.push(`${key}= this.$route.query[key]`)
+        }
+      }
+      list = list.join('&').toString()
+      if (flag) {
+        this.$route.query.src = `${this.$route.query.src}${
+          list.length > 0 ? `&list` : ''
+        }`
+      } else {
+        this.$route.query.src = `${this.$route.query.src}${
+          list.length > 0 ? `?list` : ''
+        }`
+      }*/
+      let frameData=getStore({
+        name: 'frameData'
+      }) || {}
+      console.log('frameData',frameData)
+      this.urlPath=frameData.url
+      // 超时3s自动隐藏等待狂，加强用户体验
+      let time = 3
+      const timeFunc = setInterval(() => {
+        time--
+        if (time === 0) {
+          this.hide()
+          clearInterval(timeFunc)
+        }
+      }, 1000)
+      if(this.$refs.iframe){
+        this.iframeInit()
+      }
+    },
+    // iframe窗口初始化
+    iframeInit() {
+      const iframe = this.$refs.iframe
+      const clientHeight = document.documentElement.clientHeight - 80
+      iframe.style.height = `${clientHeight}px`
+      if (iframe.attachEvent) {
+        iframe.attachEvent('onload', () => {
+          this.hide()
+        })
+      } else {
+        iframe.onload = () => {
+          this.hide()
+        }
+      }
+    },
+    getUrlPath: function() {
+      // 获取 iframe src 路径
+      let url = window.location.href
+      url = url.replace('/myiframe', '')
+      return url
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+</style>

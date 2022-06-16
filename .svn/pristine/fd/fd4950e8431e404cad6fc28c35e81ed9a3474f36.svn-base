@@ -1,0 +1,46 @@
+.v-header {
+	height: 70px;
+	background-color: #fff;
+	box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+	.inline-input {
+		width: 300px;
+	}
+	.v-hd-right {
+		margin-right: 30px;
+		height: 100%;
+	}
+	.v-hd-left {
+		padding-left: 30px;
+	}
+	.v-user {
+		background-color: #FAFBFD;
+		border-left: 1px solid #F1F3FA;
+		border-right: 1px solid #F1F3FA;
+		height: 100%;
+		padding: 0px 20px;
+		line-height: 70px;
+		.v-user-name {
+			color: #98A6AC;
+			font-weight: 600;
+		}
+		i {
+			position: relative;
+			top: 6px;
+			font-size: 28px;
+		}
+	}
+	.v-sign-out {
+		width: 80px;
+		height: 100%;
+		.form-btn {
+			height: 100%;
+		}
+		i {
+			font-weight: 600;
+			transform: rotate(90deg);
+		}
+	}
+	.v-search {
+		margin-top: 16px;
+	}
+}

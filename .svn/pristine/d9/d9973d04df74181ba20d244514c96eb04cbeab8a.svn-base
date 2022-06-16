@@ -1,0 +1,62 @@
+{
+  "company":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["gsjjupload","gsjjdownload"]
+  },
+  "proposal":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["cbjydownload","cbjyupload"]
+  },
+  "claim":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["lpjyupload","lpjydownload"]
+  },
+  "underwrite":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["hbzyupload","hbzydownload"]
+  },
+  "templates":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["mbxzupload","mbxzdownload","mbxzpz"]
+  },
+  "demand":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["anxdzxjxq","anxdzdbrw","anxdzrwcx","anxdzwhpz"]
+  },
+  "demandMain":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["anxdzxjxq","anxdzdbrw","anxdzrwcx","anxdzwhpz"]
+  },
+  "shop":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["fwscxmfu","fwscwddd","fwscddgl","fwscpz"]
+  },
+  "shopMain":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["fwscxmfu","fwscwddd","fwscddgl","fwscpz"]
+  },
+  "enquiry":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["zxxjfqxj","zxxjdbxj","zxxjxjcx","zxxjxjfx"]
+  },
+  "enquiryMain":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["zxxjfqxj","zxxjdbxj","zxxjxjcx","zxxjxjfx"]
+  },
+  "blacklist":{
+    "code": "200",
+    "msg": "用户页签获取成功",
+    "data": ["hmdupload","hmddownload"]
+  }
+}

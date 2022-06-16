@@ -1,0 +1,230 @@
+<template>
+    <div class="app-container">
+      <div class="app-container-bg">
+        <section class="tabs-content-item">
+          <div class="pageName">非车理赔岗位换人申请</div>
+          <div class="form-base input-width-auto">
+            <vue-element-loading
+              :active="showloading" spinner="bar-fade-scale"
+              :is-full-screen="true"
+              :text="'数据处理中，请耐心等待...'"
+              color="#E9892D"
+              background-color="rgba(255, 255, 255, .5)"/>
+            <!-- {{queryform}} -->
+            <el-form class="form" autoComplete="on"
+                     ref="queryform" label-position="left" label-width="50px" label-suffix="：" size="medium">
+              <el-row >
+                <el-col :span="8">
+                    <div class="grid-content bg-purple-dark">
+                      <el-form-item label="系统">
+                        <el-select
+                          @change="selectChangeSystemCode"
+                          v-model="queryform.systemcode"
+                          filterable
+                          remote
+                          reserve-keyword
+                          placeholder="请选择需要申请的系统">
+                          <el-option
+                            v-for="item in optionsClaimsSystemCode"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="8" :offset="8">
+                  <div class="grid-content bg-purple-dark">
+                    <el-form-item label-width="0px">
+                      <div class="button-no-label">
+                        <!--<el-button type="primary" class="button-base button-form-query" @click="handleTemplateDownload()">导入模板下载</el-button>-->
+                        <el-button type="primary" class="button-base button-form-query button-form-small"  v-if="docStatus" @click="handleAdd()">新增</el-button>
+                        <!-- <el-button type="primary" class="button-base button-form-query button-form-small" @click="handleExport()">导出</el-button>-->
+                      </div>
+                    </el-form-item>
+                  </div>
+                </el-col>
+              </el-row>
+            </el-form>
+          </div>
+          <!--列表-->
+          <!-- {{results}} -->
+          <div class="table-base table-select-width-full">
+            <!--<div class="shuiyin">{{userName}}</div>-->
+            <el-table :data="results"  style="width: 100%;margin-bottom: 20px;"
+                      border>
+              <!-- <el-table-column type="selection" width="40" fixed="left">
+               </el-table-column>-->
+               <el-table-column type="index" label="序号" width="60" fixed="left" class-name="SerialNumber">
+               </el-table-column>
+              <el-table-column prop="beforeUserCode" label="原岗位人员工号" width="240">
+                <template slot-scope="scope">
+                  <el-select
+                    @change="(value)=>{selectChangeBeforeUserCode(value,scope.$index, scope.row)}"
+                    :disabled ="!docStatus"
+                    v-model="scope.row.beforeUserCode"
+                    filterable
+                    remote
+                    reserve-keyword
+                    placeholder="请输入关键词"
+                    :remote-method="(query)=>{remoteMethodBeforeUserCode(query,scope.$index, scope.row)}"
+                    :loading="scope.row.loadingBeforeUserCode">
+                    <el-option
+                      v-for="(item,index) in scope.row.optionsBeforeUserCode"
+                      :key="item.value+index+scope.$index"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column prop="beforeUserName" label="原岗位人员姓名"  min-width="230">
+                <template slot-scope="scope">
+                  <el-tooltip effect="dark" :content="scope.row.beforeUserName"  placement="top">
+                    <el-select
+                      @change="(value)=>{selectChangeBeforeUserName(value,scope.$index, scope.row)}"
+                      :disabled ="!docStatus"
+                      v-model="scope.row.beforeUserName"
+                      filterable
+                      remote
+                      reserve-keyword
+                      placeholder="请输入关键词"
+                      :remote-method="(query)=>{remoteMethodBeforeUserName(query,scope.$index, scope.row)}"
+                      :loading="scope.row.loadingBeforeUserName">
+                      <el-option
+                        v-for="(item,index) in scope.row.optionsBeforeUserName"
+                        :key="item.value+index+scope.$index"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                  </el-tooltip>
+                </template>
+              </el-table-column>
+              <el-table-column prop="usercode" label="换岗后人员工号"  width="240">
+                <template slot-scope="scope">
+                  <el-select
+                    @change="(value)=>{selectChangeUserCode(value,scope.$index, scope.row)}"
+                    :disabled ="!docStatus"
+                    v-model="scope.row.usercode"
+                    filterable
+                    remote
+                    reserve-keyword
+                    placeholder="请输入关键词"
+                    :remote-method="(query)=>{remoteMethodUserCode(query,scope.$index, scope.row)}"
+                    :loading="scope.row.loadingUserCode">
+                    <el-option
+                      v-for="(item,index) in scope.row.optionsUserCode"
+                      :key="item.value+index+scope.$index"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column prop="usercname" label="换岗后人员姓名"  width="240">
+                <template slot-scope="scope">
+                  <el-select
+                    @change="(value)=>{selectChangeUserName(value,scope.$index, scope.row)}"
+                    :disabled ="!docStatus"
+                    v-model="scope.row.usercname"
+                    filterable
+                    remote
+                    reserve-keyword
+                    placeholder="请输入关键词"
+                    :remote-method="(query)=>{remoteMethodUserName(query,scope.$index, scope.row)}"
+                    :loading="scope.row.loadingUserName">
+                    <el-option
+                      v-for="(item,index) in scope.row.optionsUserName"
+                      :key="item.value+index+scope.$index"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column v-if="docStatus"  label="操作" width="200"  fixed="right" align="center" >
+                <template slot-scope="scope">
+                  <el-button type="text" class="button-table-operate" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                  <el-button type="text" class="button-table-operate" @click="handleCopy(scope.$index, scope.row)">复制</el-button>
+                </template>
+              </el-table-column>
+              <!--<el-table-column label="操作" width="100"  fixed="right" align="center" >
+                <template slot-scope="scope">
+                  <el-dropdown v-if="currentTab.name=='upload'"
+                    trigger="click" placement="bottom"
+                    @command="handleCommand($event,scope.$index,scope.row)">
+                                    <span class="el-dropdown-link table-operate">
+                                      编辑<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>
+                                    </span>
+                    <el-dropdown-menu slot="dropdown" class="table-operate">
+                      <el-dropdown-item>
+                        <el-upload
+                          class="upload-demo"
+                          action="/gcd/underwriteExp/upload"
+                          :data={policyNo:scope.row.policyNo}
+                          :before-upload="beforeUpload"
+                          :show-file-list="false">
+                          <el-button size="text" class="button-table-operate button-table-upload" @click="setFileIsExists(scope)">上传资料</el-button>
+                        </el-upload>
+                      </el-dropdown-item>
+                      <el-dropdown-item command="download" >下载资料</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                  <el-button v-else  size="text" class="button-table-operate" @click="handleDownload(scope.$index, scope.row)">下载资料</el-button>
+              </template>
+              </el-table-column>-->
+              <!--<div slot="append" style="text-align: center">
+                测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+              </div>-->
+            </el-table>
+          </div>
+          <div class="form-bottom-button">
+            <el-button type="primary" class="button-base button-form-query" v-if="docStatus"  @click="commitData()">提交</el-button>
+            <el-button type="primary" class="button-base button-form-query"  @click="closePage()">关闭</el-button>
+          </div>
+          <div class="toolbar pagination-base">
+            <el-button class="pagination-button"  v-if="docStatus"  @click="handleTemplateDownload()">模板下载</el-button>
+            <div class="pagination-upload-container" v-if="docStatus" >
+              <nx-upload-excel-component :on-success='handleSuccess' :before-upload="beforeUpload" textName="导入信息"></nx-upload-excel-component>
+            </div>
+            <!-- <div style="float: right;
+                        padding: 7px 12px;
+                        min-width: 110px;
+                        background-color: #fff;
+                        color: #E9892D;
+                        border: 1px solid #E9892D;
+                        margin-left: 0px;
+                        margin-right: 20px;
+                        font-size: 14px;
+                        border-radius: 4px;">
+                <a href="/static/localfile/开通系统使用以及系统内权限操作手册.docx" download="开通系统使用以及系统内权限操作手册.docx" target="_blank">EHR工号申请手册下载</a>
+            </div> -->
+            <!-- <el-button class="pagination-button"  style="float: right;margin-right: 0" v-if="docStatus"  @click="frontDownload()">EHR工号申请手册下载</el-button> -->
+          </div>
+        </section>
+      </div>
+    </div>
+  </template>
+  <style lang="scss" src="@/assets/style/app.scss"></style>
+  <style lang="scss" scoped>
+    .app-container{
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .app-container-bg{
+      border-top: none;
+    }
+    .tabs-content-item{
+      padding: 20px;
+    }
+    .pageName{
+      text-align: center;
+      font-size: 24px;
+      padding: 5px 0;
+      border-bottom: 1px solid #E9892D;
+      margin-bottom: 10px;
+    }
+  </style>
+<script src="./oaAutoPostReplaceApply.js"></script>
