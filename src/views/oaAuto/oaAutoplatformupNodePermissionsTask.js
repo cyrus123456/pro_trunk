@@ -249,7 +249,7 @@ export default {
           if (Object.hasOwnProperty.call(object, key)) {
             if (!this.colNameMap[key].numName) continue
             const element = object[key]
-            let str = `${this.colNameMap[key].numName}=${element || '0'}`
+            let str = `${this.colNameMap[key].numName}-${element || '0'}`
             switch (this.colNameMap[key].father) {
               case 'qgt':
                 qgtrisk.push(str)
