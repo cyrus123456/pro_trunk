@@ -1,10 +1,45 @@
 import { dualCorePermissions } from '@/api/oaAuto.js'
+import { getToken } from '@/utils/auth' // 验权
+
 export default {
   name: 'oaAutoplatformupNodePermissionsTask',
   components: {},
   props: [],
   data () {
     return {
+      requiredRules: [
+        { required: true, message: '不能为空', trigger: ['blur', 'change'] }
+      ],
+      // 每行险种查询
+      cloRisk: {
+        queryqycxbx: [], // 企业财产保险（0101-0112、0116-0117、0119、0121、0198、0199）
+        querygcx: [], // 工程险（列明责任）（0701、0702、0711）
+        querygcyqx: [], // 工程一切险（0801-0806、0898-0899）
+        querytsbdbx: [], // 特殊标的保险（0201、0202、0205、0207-0211、0222）
+        querytszhx: [], // 特殊综合险（2303-2309、2311）
+        querysybx: [], // 石油保险（1213-1221、1299）
+        queryhthkbx: [], // 航空航天保险（1302-1306、1396-1399）
+        queryhnybx: [], // 核能源保险（1401-1406、1498-1499）
+        queryzrxgzzrbx: [], // 公众责任保险（1501、1503、1505、1508、1509、1511-1515、1519、1520、1526-1530、1532-1537、1539-1541、1599）
+        queryzrxguzhuzrbx: [], // 雇主责任保险（1701、1703-1713、1719-1721、1798）
+        queryzrxcpzrbx: [], // 产品责任保险（1601-1605、1698）
+        queryzyzrbx: [], // 职业责任保险（1801、1803-1819、1812-1822）
+        queryqtzrbx: [], // 其他责任保险（1901、1903-1912、1915-1917、1919、1924-1927、1930、1932、1935-1937、1941-1942）
+        queryxybx: [], // 信用保险（2101-2102）
+        querybzbx: [], // 保证保险（2201、2202、2213、2227-2232、2235、2237、2239-2241）
+        querygnhwysbx: [], // 国内货物运输保险（0901、0903-0910、0912、0913、0915、0916、0918、0999）
+        queryhyyyxybx: [], // 货运预约协议保险（YAB0）
+        queryjzx: [], // 集装箱（2001）
+        queryjckhy: [], // 进出口货运（1001、1002、1099）
+        querycbbx: [], // 船舶保险（1102、1103、1106、1107、1109-1113、1115-1117、1119、1196-1199）
+        querygcgzptjcbx: [], // 普通家财保险 0301 0302 0303  0304 0305 0306 0307 0308 0309 0310 0312 0313
+        querygcgztsjcbx: [], // 特殊家财保险 0401
+        querygcgzgrccbx: [], // 个人财产保险0601 0602 0604 0605 0606 0607 0608 0609 0610 0611 0612
+        querygcgzgzzrbx: [], // 公众责任保险1510 1517 1518 1521 1522 1523 1524 1525 1531 1535 1538 1544
+        querygcgzzyzrbx: [], // 职业责任保险 1820
+        querygcgzqtzrbx: [] // 其它责任保险1918 1923 1931 1938 1939 1940
+      },
+      showloading: false,
       colNameMap: {
         comcode: {
           numName: '',
@@ -87,7 +122,7 @@ export default {
           father: 'sx'
         },
         cargoBooking: {
-          numName: 'YA',
+          numName: 'YAB0',
           father: 'sx'
         },
         container: {
@@ -140,45 +175,76 @@ export default {
       zrx: [], // 双核模板
       xyxybzx: [], // 双核模板
       sx: [], // 双核模板
-      gcgz: []// 双核模板
+      gcgz: [], // 双核模板
+      businessPropertyInsurance_checkList: [], // 企业财产保险险种多选框
+      businessPropertyInsurance_Options: ['0101-0112', '0116-0117', '0119', '0121', '0198', '0199']
     }
   },
   setup () {
     return {}
   },
   methods: {
+    queryLevel (row) {
+      this.$refs.resultsForm.validate(valid => {
+        if (valid) {
+          dualCorePermissions({
+            'usercode': row.workNumber,
+            'comcode': row.comcode,
+            'codeType': 'queryOriginalpermissions',
+            'actionType': 'query'
+          }).then(async res => {
+            for (const key in res.codeLabels[0]) {
+              if (Object.hasOwnProperty.call(res.codeLabels[0], key)) {
+                const element = res.codeLabels[0][key]
+                let lev = key.split('--')[2]
+                if (!row[element].includes(lev)) {
+                  row[element].push(lev)
+                }
+                // row[element] = [...new Set([...row[element], lev])]// 去重
+              }
+            }
+          })
+        }
+      })
+    },
+    handleSuccess () {
+
+    },
+    beforeUpload () {
+
+    },
     handleAdd () {
       this.results.push({
         comcode: '',
         comname: '',
         nameUnderwriter: '',
         workNumber: '',
-        businessPropertyInsurance: '',
-        specifyingLiability: '',
-        engineeringAllRisks: '',
-        specialSubject: '',
-        specialComprehensive: '',
-        oil: '',
-        aviation: '',
-        nuclearEnergy: '',
-        publicLiability: '',
-        employerLiability: '',
-        productLiability: '',
-        professionalResponsibility: '',
-        otherResponsibilities: '',
-        credit: '',
-        ensure: '',
-        transportGoods: '',
-        cargoBooking: '',
-        container: '',
-        importExport: '',
-        ship: '',
-        familyProperty: '',
-        specialProperty: '',
-        personalProperty: '',
-        publicResponsibility: '',
-        profession: '',
-        other: ''
+        businessPropertyInsurance: [],
+        specifyingLiability: [],
+        engineeringAllRisks: [],
+        specialSubject: [],
+        specialComprehensive: [],
+        oil: [],
+        aviation: [],
+        nuclearEnergy: [],
+        publicLiability: [],
+        employerLiability: [],
+        productLiability: [],
+        professionalResponsibility: [],
+        otherResponsibilities: [],
+        credit: [],
+        ensure: [],
+        transportGoods: [],
+        cargoBooking: [],
+        container: [],
+        importExport: [],
+        ship: [],
+        familyProperty: [],
+        specialProperty: [],
+        personalProperty: [],
+        publicResponsibility: [],
+        profession: [],
+        other: []
       })
     },
     handleDelete (index, row) {
@@ -235,77 +301,107 @@ export default {
         row.comcode = this.comcodeOtpions.find(item => item.label === row.comname).value
       }
     },
-    businessPropertyInsurance_treeCheck (data, checked, indeterminate) {
-      console.log(data, checked, indeterminate)
+    businessPropertyInsurance_treeCheck (data) {
+      console.log(data)
+      debugger
     },
     commitData () {
-      let parmaData = this.results.map(object => {
-        let qgtrisk = []
-        let zrxrisk = []
-        let xyxybzxrisk = []
-        let sxrisk = []
-        let gcgzrisk = []
-        for (const key in object) {
-          if (Object.hasOwnProperty.call(object, key)) {
-            if (!this.colNameMap[key].numName) continue
-            const element = object[key]
-            let str = `${this.colNameMap[key].numName}-${element || '0'}`
-            switch (this.colNameMap[key].father) {
-              case 'qgt':
-                qgtrisk.push(str)
-                break
-              case 'zrx':
-                zrxrisk.push(str)
-                break
-              case 'xyxybzx':
-                xyxybzxrisk.push(str)
-                break
-              case 'sx':
-                sxrisk.push(str)
-                break
-              case 'gcgz':
-                gcgzrisk.push(str)
-                break
-              default:
-                break
+      this.$refs.resultsForm.validate(valid => {
+        if (valid) {
+          let parmaData = this.results.map(object => {
+            let qgtrisk = []
+            let zrxrisk = []
+            let xyxybzxrisk = []
+            let sxrisk = []
+            let gcgzrisk = []
+            for (const key in object) {
+              if (Object.hasOwnProperty.call(object, key)) {
+                if (!this.colNameMap[key].numName) continue
+                const element = object[key]
+                for (const iterator of element) {
+                  let str = `${this.colNameMap[key].numName}-${iterator || '0'}`
+                  switch (this.colNameMap[key].father) {
+                    case 'qgt':
+                      qgtrisk.push(str)
+                      break
+                    case 'zrx':
+                      zrxrisk.push(str)
+                      break
+                    case 'xyxybzx':
+                      xyxybzxrisk.push(str)
+                      break
+                    case 'sx':
+                      sxrisk.push(str)
+                      break
+                    case 'gcgz':
+                      gcgzrisk.push(str)
+                      break
+                    default:
+                      break
+                  }
+                }
+              }
             }
-          }
-        }
-        return {
-          comcode: object.comcode || '0',
-          comcodename: object.comname || '0',
-          usercode: object.workNumber || '0',
-          usercname: object.nameUnderwriter || '0',
-          qgt: this.qgt.length ? this.qgt.join(',') : [],
-          qgtrisk: qgtrisk.length ? qgtrisk.join(',') : [],
-          zrx: this.zrx.length ? this.zrx.join(',') : [],
-          zrxrisk: zrxrisk.length ? zrxrisk.join(',') : [],
-          xyxybzx: this.xyxybzx.length ? this.xyxybzx.join(',') : [],
-          xyxybzxrisk: xyxybzxrisk.length ? xyxybzxrisk.join(',') : [],
-          sx: this.sx.length ? this.sx.join(',') : [],
-          sxrisk: sxrisk.length ? sxrisk.join(',') : [],
-          gcgz: this.gcgz.length ? this.gcgz.join(',') : [],
-          gcgzrisk: gcgzrisk.length ? gcgzrisk.join(',') : []
+            return {
+              comcode: object.comcode || '',
+              comcodename: object.comname || '',
+              usercode: object.workNumber || '',
+              usercname: object.nameUnderwriter || '',
+              qgt: this.qgt.length ? this.qgt.join(',') : '',
+              qgtrisk: qgtrisk.length ? qgtrisk.join(',') : '',
+              zrx: this.zrx.length ? this.zrx.join(',') : '',
+              zrxrisk: zrxrisk.length ? zrxrisk.join(',') : '',
+              xyxybzx: this.xyxybzx.length ? this.xyxybzx.join(',') : '',
+              xyxybzxrisk: xyxybzxrisk.length ? xyxybzxrisk.join(',') : '',
+              sx: this.sx.length ? this.sx.join(',') : '',
+              sxrisk: sxrisk.length ? sxrisk.join(',') : '',
+              gcgz: this.gcgz.length ? this.gcgz.join(',') : '',
+              gcgzrisk: gcgzrisk.length ? gcgzrisk.join(',') : ''
 
-          // zb: '146',
-          // zbrisk: '15-16,16-16,17-16,18-16,19-16,21-16,22-16,36-16,34-16',
-          // hyx: '106',
-          // hyxrisk: '10-16',
-          // yjx: '21',
-          // yjxrisk: '27-6'
+              // zb: '146',
+              // zbrisk: '15-16,16-16,17-16,18-16,19-16,21-16,22-16,36-16,34-16',
+              // hyx: '106',
+              // hyxrisk: '10-16',
+              // yjx: '21',
+              // yjxrisk: '27-6'
+            }
+          })
+          // 提交申请
+          dualCorePermissions({
+            // actionType: 'upJfcdSwitchMessage',
+            // fdid: getToken('oaAuto-Token').fdid,
+            // docCreator: getToken('oaAuto-Token').docCreator,
+            actionType: 'upNodePermissions',
+            docCreator: getToken('oaAuto-Token').fdid,
+            fdid: getToken('oaAuto-Token').docCreator,
+            info: parmaData
+          })
         }
       })
-      console.log(parmaData)
-      debugger
     }
   },
-  computed: {},
+  computed: {
+
+  },
   watch: {},
   // 声明周期函数
   beforeCreate () { },
   created () { },
   beforeMount () { },
   async mounted () {
+    for (const key in this.cloRisk) {
+      if (Object.hasOwnProperty.call(this.cloRisk, key)) {
+        let resQueryRisk = await dualCorePermissions({
+          'fieldValue': key,
+          'codeType': 'queryRisk',
+          'actionType': 'query'
+        })
+        // .then(resQueryRisk => {
+        // this.cloRisk[key] = resQueryRisk.codeLabels
+        this.$set(this.cloRisk, key, resQueryRisk.codeLabels.join('\r\n'))
+        // })
+      }
+    }
     // 企工特模板
     dualCorePermissions({
       'fieldValue': 'qgt',

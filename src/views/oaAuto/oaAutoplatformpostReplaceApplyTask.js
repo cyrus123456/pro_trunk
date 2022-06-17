@@ -1,4 +1,6 @@
 import { dualCorePermissions } from '@/api/oaAuto.js'
+import { getToken } from '@/utils/auth' // 验权
+
 export default {
   name: 'oaAutoplatformpostReplaceApplyTask',
   components: {},
@@ -9,6 +11,7 @@ export default {
       docStatus: true, // 展示按按钮
       comcodeOtpions: [], // 机构代码下拉值
       workNumberOtpions: [], // 工号下拉值
+      old_workNumberOtpions: [], // 工号下拉值
       qgtOtpions: [], // 企工特下拉值
       zrxOtpions: [], // 责任险下拉值
       xyxhbzxOtpions: [], // 信用险和保证险模板下拉值
@@ -20,10 +23,33 @@ export default {
     return {}
   },
   methods: {
+    commitData () {
+      debugger
+      let parmaData = this.results.map(item => {
+        return {
+          'comcode': item.comcode,
+          'comcodename': item.comname,
+          'beforeUserCode': item.old_workNumber,
+          'beforeUserName': item.old_nameUnderwriter,
+          'usercode': item.workNumber,
+          'usercname': item.nameUnderwriter
+        }
+      })
+      // 提交申请
+      debugger
+      dualCorePermissions({
+        actionType: 'platformReplaceMessage',
+        docCreator: getToken('oaAuto-Token').fdid,
+        fdid: getToken('oaAuto-Token').docCreator,
+        info: parmaData
+      })
+    },
     handleAdd () {
       this.results.push({
         comcode: '',
         comname: '',
+        old_nameUnderwriter: '',
+        old_workNumber: '',
         nameUnderwriter: '',
         workNumber: '',
         businessPropertyInsurance: '',
@@ -67,6 +93,31 @@ export default {
             return { label: tempArr[1], value: tempArr[0] }
           })
         })
+      }
+    },
+    old_workNumberRemoteMethod (query) {
+      if (query !== '') {
+        debugger
+        dualCorePermissions({
+          'fieldValue': query,
+          'codeType': 'userCode',
+          'actionType': 'query'
+        }).then(async res => {
+          this.old_workNumberOtpions = res.codeLabels.map(item => {
+            let tempArr = item.split('--')
+            return { label: tempArr[1], value: tempArr[0] }
+          })
+        })
+      }
+    },
+    old_workNumberChange (row) {
+      if (row.old_workNumber !== '') {
+        row.old_nameUnderwriter = this.old_workNumberOtpions.find(item => item.value === row.old_workNumber).label
+      }
+    },
+    old_nameUnderwriterChange (row) {
+      if (row.old_nameUnderwriter !== '') {
+        row.old_workNumber = this.old_workNumberOtpions.find(item => item.label === row.old_nameUnderwriter).value
       }
     },
     workNumberChange (row) {

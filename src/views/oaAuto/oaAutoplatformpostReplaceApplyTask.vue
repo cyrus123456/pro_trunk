@@ -51,22 +51,22 @@
                 </el-select>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="workNumber" label="原岗位人员工号" min-width="150">
+            <el-table-column align="center" prop="old_workNumber" label="原岗位人员工号" min-width="150">
               <template slot-scope="scope">
-                <el-select v-model="scope.row.workNumber" filterable remote :remote-method="workNumberRemoteMethod"
-                  placeholder="请输入关键词" @change="workNumberChange(scope.row)">
-                  <el-option v-for="(item, index) in workNumberOtpions" :key="item.value + index + scope.$index"
+                <el-select v-model="scope.row.old_workNumber" filterable remote :remote-method="old_workNumberRemoteMethod"
+                  placeholder="请输入关键词" @change="old_workNumberChange(scope.row)">
+                  <el-option v-for="(item, index) in old_workNumberOtpions" :key="item.value + index + scope.$index"
                     :label="item.value" :value="item.value">
                     <span style="float: left">{{ item.value }}-{{ item.label }}</span>
                   </el-option>
                 </el-select>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="nameUnderwriter" label="原岗位人员姓名" min-width="150">
+            <el-table-column align="center" prop="old_nameUnderwriter" label="原岗位人员姓名" min-width="150">
               <template slot-scope="scope">
-                <el-select v-model="scope.row.nameUnderwriter" filterable remote :remote-method="workNumberRemoteMethod"
-                  placeholder="请输入关键词" @change="nameUnderwriterChange(scope.row)">
-                  <el-option v-for="(item, index) in workNumberOtpions" :key="item.value + index + scope.$index"
+                <el-select v-model="scope.row.old_nameUnderwriter" filterable remote :remote-method="old_workNumberRemoteMethod"
+                  placeholder="请输入关键词" @change="old_nameUnderwriterChange(scope.row)">
+                  <el-option v-for="(item, index) in old_workNumberOtpions" :key="item.value + index + scope.$index"
                     :label="item.label" :value="item.label">
                     <span style="float: left">{{ item.value }}-{{ item.label }}</span>
                   </el-option>
