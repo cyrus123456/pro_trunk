@@ -50,7 +50,7 @@ export default {
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: '权限申请岗位换人模板',
+          filename: '双核权限模板岗位换人模板',
           headerStyle: { color: '000000', fgColor: 'BDD7EE', column: ['A1', 'B1', 'C1'] }
         })
       })

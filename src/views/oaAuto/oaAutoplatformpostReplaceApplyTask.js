@@ -23,6 +23,42 @@ export default {
     return {}
   },
   methods: {
+    // 导入模板下载
+    handleTemplateDownload () {
+          // 前端生成模板
+          import('@/vendor/Export2Excel').then(excel => {
+            const tHeader = ['机构代码', '原人员代码', '人员代码']
+            const filterVal = ['comcode', 'beforeusercode', 'usercode']
+            const list = [
+              {
+                'comcode': '00160000',
+                'beforeusercode': '00160021',
+                'usercode': '00160024'
+              },
+              {
+                'comcode': '00160000',
+                'beforeusercode': '00160021',
+                'usercode': '00160024'
+              },
+              {
+                'comcode': '00160000',
+                'beforeusercode': '00160021',
+                'usercode': '00160024'
+              }
+            ]
+            const data = this.formatJson(filterVal, list)
+            excel.export_json_to_excel({
+              header: tHeader,
+              data,
+              filename: '权限申请岗位换人模板',
+              headerStyle: { color: '000000', fgColor: 'BDD7EE', column: ['A1', 'B1', 'C1'] }
+            })
+          })
+          // getTemplatefiles('目标客户作战图.xlsx')
+    },
+    formatJson (filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => v[j]))
+    },
     commitData () {
       debugger
       let parmaData = this.results.map(item => {
