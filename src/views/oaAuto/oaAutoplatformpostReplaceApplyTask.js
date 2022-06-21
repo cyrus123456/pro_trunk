@@ -1,12 +1,14 @@
 import { dualCorePermissions } from '@/api/oaAuto.js'
 import { getToken } from '@/utils/auth' // 验权
+import nxUploadExcelComponent from '@/components/nx-upload-excel'
 
 export default {
   name: 'oaAutoplatformpostReplaceApplyTask',
-  components: {},
+  components: {nxUploadExcelComponent},
   props: [],
   data () {
     return {
+      oaPageUploadCount: 30, // 上传最大行数
       results: [], // 表格数据
       docStatus: true, // 展示按按钮
       comcodeOtpions: [], // 机构代码下拉值
@@ -23,11 +25,64 @@ export default {
     return {}
   },
   methods: {
+    // 导入前处理
+    beforeUpload (file) {
+      // this.showloading = true
+      let filename = file.name
+      let _index = filename.lastIndexOf('.')
+      let suffix = filename.substr(_index + 1)
+      let fileType = suffix
+      if (fileType !== 'xlsx' && fileType !== 'xls') {
+        this.$message({
+          message: '请选择excel文件进行上传！',
+          type: 'warning'
+        })
+        // this.showloading = false
+        return false
+      }
+      return true // 直接返回没有处理文件大小限制 后期有需要将此处注掉，下面代码放开即可
+      /* const isLt2M = file.size / 1024 / 1024 < 1
+      if (isLt2M) {
+        return true
+      }
+      this.$message({
+        message: 'Please do not upload files larger than 2m in size.',
+        type: 'warning'
+      })
+      return false */
+    },
+    // 导入成功处理
+    handleSuccess ({ results }) {
+      if (results.length > 0) {
+        dualCorePermissions({
+          actionType: 'infoSupply',
+          fieldValue: 'supplyPlatformPostReplaceMessage',
+          info: results.map(item => {
+            return {
+              'comcode': item['机构代码'],
+              'beforeusercode': item['原岗位人员工号'],
+              'usercode': item['换岗后人员工号']
+            }
+          })
+        }).then(res => {
+          this.results = res.codeValues.map(item => {
+            return {
+              comcode: item.comcode,
+              comname: item.comcodename,
+              old_workNumber: item.beforeusercode,
+              old_nameUnderwriter: item.beforeUserName,
+              workNumber: item.usercode,
+              nameUnderwriter: item.usercname
+            }
+          })
+        })
+      }
+    },
     // 导入模板下载
     handleTemplateDownload () {
           // 前端生成模板
           import('@/vendor/Export2Excel').then(excel => {
-            const tHeader = ['机构代码', '原人员代码', '人员代码']
+            const tHeader = ['机构代码', '原岗位人员工号', '换岗后人员工号']
             const filterVal = ['comcode', 'beforeusercode', 'usercode']
             const list = [
               {

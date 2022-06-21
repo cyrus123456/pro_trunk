@@ -107,22 +107,10 @@
                 <el-table-column align="center" prop="businessPropertyInsurance" label="企业财产保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <!-- <el-popover placement="bottom" width="400" trigger="hover">
-                    <el-checkbox-group v-model="businessPropertyInsurance_checkList"
-                      @change="businessPropertyInsurance_treeCheck">
-                      <el-checkbox v-for="(item, index) in businessPropertyInsurance_Options" :key="'_' + index + index"
-                        :label="item">
-                      </el-checkbox>
-                    </el-checkbox-group>
-                    <el-button slot="reference">险种</el-button>
-                  </el-popover> -->
-                    <!-- <el-popover placement="bottom" width="400" trigger="hover">
-                    <div v-for="(item, index) in cloRisk.queryqycxbx" :key="'_' + index + index">
-                      {{ item }}
-                    </div>
-                    <span slot="reference">企业财产保险</span>
-                  </el-popover> -->
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryqycxbx}`" placement="top">
+                    <el-tooltip :tabindex="0" class="item" effect="dark" :content="cloRisk.queryqycxbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryqycxbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>
                         企业财产保险
                       </span>
@@ -139,7 +127,10 @@
                 <el-table-column align="center" prop="specifyingLiability" label="工程险（列明责任）" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querygcx}`" placement="top">
+                    <el-tooltip :tabindex="1" class="item" effect="dark" :content="cloRisk.querygcx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querygcx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>工程险（列明责任）</span>
                     </el-tooltip>
                   </template>
@@ -154,7 +145,10 @@
                 <el-table-column align="center" prop="engineeringAllRisks" label="工程一切险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querygcyqx}`" placement="top">
+                    <el-tooltip :tabindex="2" class="item" effect="dark" :content="cloRisk.querygcyqx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querygcyqx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>工程一切险</span>
                     </el-tooltip>
                   </template>
@@ -170,7 +164,10 @@
                 <el-table-column align="center" prop="specialSubject" label="特殊标的保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querytsbdbx}`" placement="top">
+                    <el-tooltip :tabindex="3" class="item" effect="dark" :content="cloRisk.querytsbdbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querytsbdbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>特殊标的保险</span>
                     </el-tooltip>
                   </template>
@@ -186,7 +183,10 @@
                 <el-table-column align="center" prop="specialComprehensive" label="特殊综合险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querytszhx}`" placement="top">
+                    <el-tooltip :tabindex="4" class="item" effect="dark" :content="cloRisk.querytszhx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querytszhx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>特殊综合险</span>
                     </el-tooltip>
                   </template>
@@ -202,7 +202,10 @@
                 <el-table-column align="center" prop="oil" label="石油保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querysybx}`" placement="top">
+                    <el-tooltip :tabindex="5" class="item" effect="dark" :content="cloRisk.querysybx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querysybx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>石油保险</span>
                     </el-tooltip>
                   </template>
@@ -218,7 +221,10 @@
                 <el-table-column align="center" prop="aviation" label="航空航天保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryhthkbx}`" placement="top">
+                    <el-tooltip :tabindex="6" class="item" effect="dark" :content="cloRisk.queryhthkbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryhthkbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>航空航天保险</span>
                     </el-tooltip>
                   </template>
@@ -234,7 +240,10 @@
                 <el-table-column align="center" prop="nuclearEnergy" label="核能源保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryhnybx}`" placement="top">
+                    <el-tooltip :tabindex="7" class="item" effect="dark" :content="cloRisk.queryhnybx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryhnybx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>航空航天保险</span>
                     </el-tooltip>
                   </template>
@@ -253,7 +262,10 @@
                 <el-table-column align="center" prop="publicLiability" label="公众责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryzrxgzzrbx}`" placement="top">
+                    <el-tooltip :tabindex="8" class="item" effect="dark" :content="cloRisk.queryzrxgzzrbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryzrxgzzrbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>公众责任保险</span>
                     </el-tooltip>
                   </template>
@@ -269,7 +281,10 @@
                 <el-table-column align="center" prop="employerLiability" label="雇主责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryzrxguzhuzrbx}`" placement="top">
+                    <el-tooltip :tabindex="9" class="item" effect="dark" :content="cloRisk.queryzrxguzhuzrbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryzrxguzhuzrbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>雇主责任保险</span>
                     </el-tooltip>
                   </template>
@@ -285,7 +300,10 @@
                 <el-table-column align="center" prop="productLiability" label="产品责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryzrxcpzrbx}`" placement="top">
+                    <el-tooltip :tabindex="10" class="item" effect="dark" :content="cloRisk.queryzrxcpzrbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryzrxcpzrbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>产品责任保险</span>
                     </el-tooltip>
                   </template>
@@ -301,7 +319,10 @@
                 <el-table-column align="center" prop="professionalResponsibility" label="职业责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryzyzrbx}`" placement="top">
+                    <el-tooltip :tabindex="11" class="item" effect="dark" :content="cloRisk.queryzyzrbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryzyzrbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>职业责任保险</span>
                     </el-tooltip>
                   </template>
@@ -317,7 +338,10 @@
                 <el-table-column align="center" prop="otherResponsibilities" label="其他责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryqtzrbx}`" placement="top">
+                    <el-tooltip :tabindex="12" class="item" effect="dark" :content="cloRisk.queryqtzrbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryqtzrbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>其他责任保险</span>
                     </el-tooltip>
                   </template>
@@ -336,7 +360,10 @@
                 <el-table-column align="center" prop="credit" label="信用保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryxybx}`" placement="top">
+                    <el-tooltip :tabindex="13" class="item" effect="dark" :content="cloRisk.queryxybx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryxybx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>信用保险</span>
                     </el-tooltip>
                   </template>
@@ -352,7 +379,10 @@
                 <el-table-column align="center" prop="ensure" label="保证保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querybzbx}`" placement="top">
+                    <el-tooltip :tabindex="14" class="item" effect="dark" :content="cloRisk.querybzbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querybzbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>保证保险</span>
                     </el-tooltip>
                   </template>
@@ -371,7 +401,10 @@
                 <el-table-column align="center" prop="transportGoods" label="国内货物运输保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querygnhwysbx}`" placement="top">
+                    <el-tooltip :tabindex="15" class="item" effect="dark" :content="cloRisk.querygnhwysbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querygnhwysbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>国内货物运输保险</span>
                     </el-tooltip>
                   </template>
@@ -387,7 +420,10 @@
                 <el-table-column align="center" prop="cargoBooking" label="货运预约协议保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryhyyyxybx}`" placement="top">
+                    <el-tooltip :tabindex="16" class="item" effect="dark" :content="cloRisk.queryhyyyxybx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryhyyyxybx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>货运预约协议保险</span>
                     </el-tooltip>
                   </template>
@@ -403,7 +439,10 @@
                 <el-table-column align="center" prop="container" label="集装箱" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryjzx}`" placement="top">
+                    <el-tooltip :tabindex="17" class="item" effect="dark" :content="cloRisk.queryjzx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryjzx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>集装箱</span>
                     </el-tooltip>
                   </template>
@@ -419,7 +458,10 @@
                 <el-table-column align="center" prop="importExport" label="进出口货运" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.queryjckhy}`" placement="top">
+                    <el-tooltip :tabindex="18" class="item" effect="dark" :content="cloRisk.queryjckhy" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.queryjckhy" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>进出口货运</span>
                     </el-tooltip>
                   </template>
@@ -435,7 +477,10 @@
                 <el-table-column align="center" prop="ship" label="船舶保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querycbbx}`" placement="top">
+                    <el-tooltip :tabindex="19" class="item" effect="dark" :content="cloRisk.querycbbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querycbbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>船舶保险</span>
                     </el-tooltip>
                   </template>
@@ -454,7 +499,10 @@
                 <el-table-column align="center" prop="familyProperty" label="普通家财保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querygcgzptjcbx}`" placement="top">
+                    <el-tooltip :tabindex="20" class="item" effect="dark" :content="cloRisk.querygcgzptjcbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querygcgzptjcbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>普通家财保险</span>
                     </el-tooltip>
                   </template>
@@ -470,7 +518,10 @@
                 <el-table-column align="center" prop="specialProperty" label="特殊家财保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querygcgztsjcbx}`" placement="top">
+                    <el-tooltip :tabindex="21" class="item" effect="dark" :content="cloRisk.querygcgztsjcbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querygcgztsjcbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>特殊家财保险</span>
                     </el-tooltip>
                   </template>
@@ -486,7 +537,10 @@
                 <el-table-column align="center" prop="personalProperty" label="个人财产保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querygcgzgrccbx}`" placement="top">
+                    <el-tooltip :tabindex="22" class="item" effect="dark" :content="cloRisk.querygcgzgrccbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querygcgzgrccbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>个人财产保险</span>
                     </el-tooltip>
                   </template>
@@ -502,7 +556,10 @@
                 <el-table-column align="center" prop="publicResponsibility" label="公众责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querygcgzgzzrbx}`" placement="top">
+                    <el-tooltip :tabindex="23" class="item" effect="dark" :content="cloRisk.querygcgzgzzrbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querygcgzgzzrbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>公众责任保险</span>
                     </el-tooltip>
                   </template>
@@ -518,7 +575,10 @@
                 <el-table-column align="center" prop="profession" label="职业责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querygcgzzyzrbx}`" placement="top">
+                    <el-tooltip :tabindex="24" class="item" effect="dark" :content="cloRisk.querygcgzzyzrbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querygcgzzyzrbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>职业责任保险</span>
                     </el-tooltip>
                   </template>
@@ -534,7 +594,10 @@
                 <el-table-column align="center" prop="other" label="其它责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="`${cloRisk.querygcgzqtzrbx}`" placement="top">
+                    <el-tooltip :tabindex="25" class="item" effect="dark" :content="cloRisk.querygcgzqtzrbx" placement="top">
+                      <div slot="content">
+                        <p v-for="(item, index) in cloRisk.querygcgzqtzrbx" :key="`_${index}}`">{{ item }} </p>
+                      </div>
                       <span>其它责任保险</span>
                     </el-tooltip>
                   </template>
