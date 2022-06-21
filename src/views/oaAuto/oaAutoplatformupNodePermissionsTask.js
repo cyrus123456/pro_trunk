@@ -452,6 +452,14 @@ export default {
         other: {
           numName: '19',
           father: 'gcgz'
+        },
+        yjx: {
+          numName: '09',
+          father: 'yjx'
+        },
+        nx: {
+          numName: '09',
+          father: 'nx'
         }
       },
       results: [], // 表格数据
@@ -814,7 +822,9 @@ export default {
         personalProperty: [],
         publicResponsibility: [],
         profession: [],
-        other: []
+        other: [],
+        yjx: [],
+        nx: []
       })
     },
     handleDelete (index, row) {
@@ -884,6 +894,8 @@ export default {
             let xyxybzxrisk = []
             let sxrisk = []
             let gcgzrisk = []
+            let yjxrisk = []
+            let nxrisk = []
             for (const key in object) {
               if (Object.hasOwnProperty.call(object, key)) {
                 if (!this.colNameMap[key].numName) continue
@@ -905,6 +917,12 @@ export default {
                       break
                     case 'gcgz':
                       gcgzrisk.push(str)
+                      break
+                    case 'yjx':
+                      yjxrisk.push(str)
+                      break
+                    case 'nx':
+                      nxrisk.push(str)
                       break
                     default:
                       break
