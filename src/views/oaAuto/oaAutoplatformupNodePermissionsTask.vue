@@ -107,7 +107,7 @@
                 <el-table-column align="center" prop="businessPropertyInsurance" label="企业财产保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="0" class="item" effect="dark" :content="cloRisk.queryqycxbx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryqycxbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryqycxbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -117,19 +117,26 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select :remove-tag="(data) => {
-                      console.log('~~~~~~~', data);
-                    }" multiple v-model="scope.row.businessPropertyInsurance" placeholder="无权限">
+                    <el-select @remove-tag="businessPropertyInsuranceRemoveTag" multiple
+                      v-model="scope.row.businessPropertyInsurance" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="businessPropertyInsuranceGarbage.length" multiple
+                        v-model="businessPropertyInsuranceGarbage">
+                        <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
                 <el-table-column align="center" prop="specifyingLiability" label="工程险（列明责任）" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="1" class="item" effect="dark" :content="cloRisk.querygcx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querygcx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querygcx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -137,17 +144,26 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.specifyingLiability" placeholder="无权限">
+                    <el-select @remove-tag="specifyingLiabilityRemoveTag" multiple
+                      v-model="scope.row.specifyingLiability" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="specifyingLiabilityGarbage.length" multiple
+                        v-model="specifyingLiabilityGarbage">
+                        <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
                 <el-table-column align="center" prop="engineeringAllRisks" label="工程一切险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="2" class="item" effect="dark" :content="cloRisk.querygcyqx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querygcyqx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querygcyqx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -155,18 +171,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.engineeringAllRisks" placeholder="无权限">
+                    <el-select @remove-tag="engineeringAllRisksRemoveTag" multiple
+                      v-model="scope.row.engineeringAllRisks" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="engineeringAllRisksGarbage.length" multiple
+                        v-model="engineeringAllRisksGarbage">
+                        <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="specialSubject" label="特殊标的保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="3" class="item" effect="dark" :content="cloRisk.querytsbdbx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querytsbdbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querytsbdbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -174,18 +199,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.specialSubject" placeholder="无权限">
+                    <el-select @remove-tag="specialSubjectRemoveTag" multiple v-model="scope.row.specialSubject"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="specialSubjectGarbage.length" multiple
+                        v-model="specialSubjectGarbage">
+                        <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="specialComprehensive" label="特殊综合险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="4" class="item" effect="dark" :content="cloRisk.querytszhx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querytszhx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querytszhx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -193,18 +227,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.specialComprehensive" placeholder="无权限">
+                    <el-select @remove-tag="specialComprehensiveRemoveTag" multiple
+                      v-model="scope.row.specialComprehensive" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="specialComprehensiveGarbage.length" multiple
+                        v-model="specialComprehensiveGarbage">
+                        <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="oil" label="石油保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="5" class="item" effect="dark" :content="cloRisk.querysybx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querysybx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querysybx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -212,18 +255,25 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.oil" placeholder="无权限">
+                    <el-select @remove-tag="oilRemoveTag" multiple v-model="scope.row.oil" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="oilGarbage.length" multiple v-model="oilGarbage">
+                        <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="aviation" label="航空航天保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="6" class="item" effect="dark" :content="cloRisk.queryhthkbx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryhthkbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryhthkbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -231,18 +281,26 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.aviation" placeholder="无权限">
+                    <el-select @remove-tag="aviationRemoveTag" multiple v-model="scope.row.aviation" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="aviationGarbage.length" multiple
+                        v-model="aviationGarbage">
+                        <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="nuclearEnergy" label="核能源保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="7" class="item" effect="dark" :content="cloRisk.queryhnybx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryhnybx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryhnybx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -250,11 +308,20 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.nuclearEnergy" placeholder="无权限">
+                    <el-select @remove-tag="nuclearEnergyRemoveTag" multiple v-model="scope.row.nuclearEnergy"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="nuclearEnergyGarbage.length" multiple
+                        v-model="nuclearEnergyGarbage">
+                        <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
@@ -264,8 +331,7 @@
                 <el-table-column align="center" prop="publicLiability" label="公众责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="8" class="item" effect="dark" :content="cloRisk.queryzrxgzzrbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryzrxgzzrbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryzrxgzzrbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -273,19 +339,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.publicLiability" placeholder="无权限">
+                    <el-select @remove-tag="publicLiabilityRemoveTag" multiple v-model="scope.row.publicLiability"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="publicLiabilityGarbage.length" multiple
+                        v-model="publicLiabilityGarbage">
+                        <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="employerLiability" label="雇主责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="9" class="item" effect="dark" :content="cloRisk.queryzrxguzhuzrbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryzrxguzhuzrbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryzrxguzhuzrbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -293,19 +367,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.employerLiability" placeholder="无权限">
+                    <el-select @remove-tag="employerLiabilityRemoveTag" multiple v-model="scope.row.employerLiability"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="employerLiabilityGarbage.length" multiple
+                        v-model="employerLiabilityGarbage">
+                        <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="productLiability" label="产品责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="10" class="item" effect="dark" :content="cloRisk.queryzrxcpzrbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryzrxcpzrbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryzrxcpzrbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -313,19 +395,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.productLiability" placeholder="无权限">
+                    <el-select @remove-tag="productLiabilityRemoveTag" multiple v-model="scope.row.productLiability"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="productLiabilityGarbage.length" multiple
+                        v-model="productLiabilityGarbage">
+                        <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="professionalResponsibility" label="职业责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="11" class="item" effect="dark" :content="cloRisk.queryzyzrbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryzyzrbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryzyzrbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -333,19 +423,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.professionalResponsibility" placeholder="无权限">
+                    <el-select @remove-tag="professionalResponsibilityRemoveTag" multiple
+                      v-model="scope.row.professionalResponsibility" placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="professionalResponsibilityGarbage.length" multiple
+                        v-model="professionalResponsibilityGarbage">
+                        <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="otherResponsibilities" label="其他责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="12" class="item" effect="dark" :content="cloRisk.queryqtzrbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryqtzrbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryqtzrbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -353,11 +451,20 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.otherResponsibilities" placeholder="无权限">
+                    <el-select @remove-tag="otherResponsibilitiesRemoveTag" multiple
+                      v-model="scope.row.otherResponsibilities" placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="otherResponsibilitiesGarbage.length" multiple
+                        v-model="otherResponsibilitiesGarbage">
+                        <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
@@ -367,7 +474,7 @@
                 <el-table-column align="center" prop="credit" label="信用保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="13" class="item" effect="dark" :content="cloRisk.queryxybx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryxybx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryxybx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -375,18 +482,25 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.credit" placeholder="无权限">
+                    <el-select @remove-tag="creditRemoveTag" multiple v-model="scope.row.credit" placeholder="无权限">
                       <el-option v-for="(item, index) in xyxhbzxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="creditGarbage.length" multiple v-model="creditGarbage">
+                        <el-option v-for="(item, index) in xyxhbzxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="ensure" label="保证保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="14" class="item" effect="dark" :content="cloRisk.querybzbx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querybzbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querybzbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -394,11 +508,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.ensure" placeholder="无权限">
+                    <el-select @remove-tag="ensureRemoveTag" multiple v-model="scope.row.ensure" placeholder="无权限">
                       <el-option v-for="(item, index) in xyxhbzxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="ensureGarbage.length" multiple v-model="ensureGarbage">
+                        <el-option v-for="(item, index) in xyxhbzxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
@@ -408,8 +529,7 @@
                 <el-table-column align="center" prop="transportGoods" label="国内货物运输保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="15" class="item" effect="dark" :content="cloRisk.querygnhwysbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querygnhwysbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querygnhwysbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -417,19 +537,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.transportGoods" placeholder="无权限">
+                    <el-select @remove-tag="transportGoodsRemoveTag" multiple v-model="scope.row.transportGoods"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="transportGoodsGarbage.length" multiple
+                        v-model="transportGoodsGarbage">
+                        <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="cargoBooking" label="货运预约协议保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="16" class="item" effect="dark" :content="cloRisk.queryhyyyxybx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryhyyyxybx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryhyyyxybx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -437,18 +565,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.cargoBooking" placeholder="无权限">
+                    <el-select @remove-tag="cargoBookingRemoveTag" multiple v-model="scope.row.cargoBooking"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="cargoBookingGarbage.length" multiple
+                        v-model="cargoBookingGarbage">
+                        <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="container" label="集装箱" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="17" class="item" effect="dark" :content="cloRisk.queryjzx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryjzx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryjzx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -456,18 +593,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.container" placeholder="无权限">
+                    <el-select @remove-tag="containerRemoveTag" multiple v-model="scope.row.container"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="containerGarbage.length" multiple
+                        v-model="containerGarbage">
+                        <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="importExport" label="进出口货运" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="18" class="item" effect="dark" :content="cloRisk.queryjckhy" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.queryjckhy" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.queryjckhy" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -475,18 +621,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.importExport" placeholder="无权限">
+                    <el-select @remove-tag="importExportRemoveTag" multiple v-model="scope.row.importExport"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="importExportGarbage.length" multiple
+                        v-model="importExportGarbage">
+                        <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="ship" label="船舶保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="19" class="item" effect="dark" :content="cloRisk.querycbbx" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querycbbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querycbbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -494,11 +649,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.ship" placeholder="无权限">
+                    <el-select @remove-tag="shipRemoveTag" multiple v-model="scope.row.ship" placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="shipGarbage.length" multiple v-model="shipGarbage">
+                        <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
@@ -508,8 +670,7 @@
                 <el-table-column align="center" prop="familyProperty" label="普通家财保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="20" class="item" effect="dark" :content="cloRisk.querygcgzptjcbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querygcgzptjcbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querygcgzptjcbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -517,19 +678,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.familyProperty" placeholder="无权限">
+                    <el-select @remove-tag="familyPropertyRemoveTag" multiple v-model="scope.row.familyProperty"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="familyPropertyGarbage.length" multiple
+                        v-model="familyPropertyGarbage">
+                        <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="specialProperty" label="特殊家财保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="21" class="item" effect="dark" :content="cloRisk.querygcgztsjcbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querygcgztsjcbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querygcgztsjcbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -537,19 +706,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.specialProperty" placeholder="无权限">
+                    <el-select @remove-tag="specialPropertyRemoveTag" multiple v-model="scope.row.specialProperty"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="specialPropertyGarbage.length" multiple
+                        v-model="specialPropertyGarbage">
+                        <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="personalProperty" label="个人财产保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="22" class="item" effect="dark" :content="cloRisk.querygcgzgrccbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querygcgzgrccbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querygcgzgrccbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -557,19 +734,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.personalProperty" placeholder="无权限">
+                    <el-select @remove-tag=" personalPropertyRemoveTag" multiple v-model="scope.row.personalProperty"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="personalPropertyGarbage.length" multiple
+                        v-model="personalPropertyGarbage">
+                        <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="publicResponsibility" label="公众责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="23" class="item" effect="dark" :content="cloRisk.querygcgzgzzrbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querygcgzgzzrbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querygcgzgzzrbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -577,19 +762,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.publicResponsibility" placeholder="无权限">
+                    <el-select @remove-tag=" publicResponsibilityRemoveTag" multiple
+                      v-model="scope.row.publicResponsibility" placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="publicResponsibilityGarbage.length" multiple
+                        v-model="publicResponsibilityGarbage">
+                        <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="profession" label="职业责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="24" class="item" effect="dark" :content="cloRisk.querygcgzzyzrbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querygcgzzyzrbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querygcgzzyzrbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -597,19 +790,27 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.profession" placeholder="无权限">
+                    <el-select @remove-tag=" professionRemoveTag" multiple v-model="scope.row.profession"
+                      placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="professionGarbage.length" multiple
+                        v-model="professionGarbage">
+                        <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
                 <el-table-column align="center" prop="other" label="其它责任保险" min-width="150">
                   <!-- 表头 -->
                   <template slot="header">
-                    <el-tooltip :tabindex="25" class="item" effect="dark" :content="cloRisk.querygcgzqtzrbx"
-                      placement="top">
+                    <el-tooltip class="item" effect="dark" :content="cloRisk.querygcgzqtzrbx" placement="top">
                       <div slot="content">
                         <p v-for="(item, index) in cloRisk.querygcgzqtzrbx" :key="`_${index}}`">{{ item }} </p>
                       </div>
@@ -617,51 +818,72 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select multiple v-model="scope.row.other" placeholder="无权限">
+                    <el-select @remove-tag=" otherRemoveTag" multiple v-model="scope.row.other" placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
+                    <el-row>
+                      <el-select class="garbage_class" v-show="otherGarbage.length" multiple v-model="otherGarbage">
+                        <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
+                          :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </el-row>
                   </template>
                 </el-table-column>
 
               </el-table-column>
               <el-table-column align="center" prop="yjx" label="意健险" min-width="150">
                 <!-- 表头 -->
-                <template slot="header">
-                  <el-tooltip :tabindex="25" class="item" effect="dark" :content="cloRisk.querygcgzqtzrbx"
+                <!-- <template slot="header">
+                  <el-tooltip  class="item" effect="dark" :content="cloRisk.querygcgzqtzrbx"
                     placement="top">
                     <div slot="content">
                       <p v-for="(item, index) in cloRisk.querygcgzqtzrbx" :key="`_${index}}`">{{ item }} </p>
                     </div>
                     <span>意健险</span>
                   </el-tooltip>
-                </template>
+                </template> -->
                 <template slot-scope="scope">
-                  <el-select multiple v-model="scope.row.yjx" placeholder="无权限">
-                    <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
+                  <el-select @remove-tag=" yjxRemoveTag" multiple v-model="scope.row.yjx" placeholder="无权限">
+                    <el-option v-for="(item, index) in yjxOtpions" :key="item.value + index + scope.$index"
                       :label="item.label" :value="item.value">
                     </el-option>
                   </el-select>
+                  <el-row>
+                    <el-select class="garbage_class" v-show="yjxGarbage.length" multiple v-model="yjxGarbage">
+                      <el-option v-for="(item, index) in yjxOtpions" :key="item.value + index + scope.$index"
+                        :label="item.label" :value="item.value">
+                      </el-option>
+                    </el-select>
+                  </el-row>
                 </template>
               </el-table-column>
               <el-table-column align="center" prop="nx" label="农险" min-width="150">
                 <!-- 表头 -->
-                <template slot="header">
-                  <el-tooltip :tabindex="25" class="item" effect="dark" :content="cloRisk.querygcgzqtzrbx"
+                <!-- <template slot="header">
+                  <el-tooltip  class="item" effect="dark" :content="cloRisk.querygcgzqtzrbx"
                     placement="top">
                     <div slot="content">
                       <p v-for="(item, index) in cloRisk.querygcgzqtzrbx" :key="`_${index}}`">{{ item }} </p>
                     </div>
                     <span>农险</span>
                   </el-tooltip>
-                </template>
+                </template> -->
                 <template slot-scope="scope">
-                  <el-select multiple v-model="scope.row.nx" placeholder="无权限">
-                    <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
+                  <el-select @remove-tag=" nxRemoveTag" multiple v-model="scope.row.nx" placeholder="无权限">
+                    <el-option v-for="(item, index) in nxOtpions" :key="item.value + index + scope.$index"
                       :label="item.label" :value="item.value">
                     </el-option>
                   </el-select>
+                  <el-row>
+                    <el-select class="garbage_class" v-show="nxGarbage.length" multiple v-model="nxGarbage">
+                      <el-option v-for="(item, index) in nxOtpions" :key="item.value + index + scope.$index"
+                        :label="item.label" :value="item.value">
+                      </el-option>
+                    </el-select>
+                  </el-row>
                 </template>
               </el-table-column>
 
@@ -696,6 +918,11 @@
 <style lang="scss" src="@/assets/style/app.scss">
 </style>
 <style scoped>
+/deep/ .garbage_class .el-select__tags-text {
+  color: red;
+  text-decoration: line-through !important;
+}
+
 /deep/ .table-base .el-form-item__error {
   display: block !important;
   margin-left: 0 !important;

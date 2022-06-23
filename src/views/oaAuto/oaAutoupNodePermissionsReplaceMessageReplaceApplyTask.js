@@ -25,6 +25,9 @@ export default {
     return {}
   },
   methods: {
+    closePage () {
+      window.open('about:blank', '_top').close()
+    },
     // 导入前处理
     beforeUpload (file) {
       // this.showloading = true

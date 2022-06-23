@@ -454,11 +454,11 @@ export default {
           father: 'gcgz'
         },
         yjx: {
-          numName: '09',
+          numName: '27',
           father: 'yjx'
         },
         nx: {
-          numName: '09',
+          numName: '28',
           father: 'nx'
         }
       },
@@ -471,17 +471,136 @@ export default {
       xyxhbzxOtpions: [], // 信用险和保证险模板下拉值
       sxOtpions: [], // 水险下拉值
       gcgzOtpions: [], // 个财个责模板下拉值,
+      yjxOtpions: [], // 意健险下拉值,
+      nxOtpions: [], // 农险下拉值,
       qgt: [], // 双核模板
       zrx: [], // 双核模板
       xyxybzx: [], // 双核模板
       sx: [], // 双核模板
-      gcgz: [] // 双核模板
+      gcgz: [], // 双核模板
+      yjx: [], // 双核模板
+      nx: [], // 双核模板
+      businessPropertyInsuranceGarbage: [],
+      specifyingLiabilityGarbage: [],
+      engineeringAllRisksGarbage: [],
+      specialSubjectGarbage: [],
+      specialComprehensiveGarbage: [],
+      oilGarbage: [],
+      aviationGarbage: [],
+      nuclearEnergyGarbage: [],
+      publicLiabilityGarbage: [],
+      employerLiabilityGarbage: [],
+      productLiabilityGarbage: [],
+      professionalResponsibilityGarbage: [],
+      otherResponsibilitiesGarbage: [],
+      creditGarbage: [],
+      ensureGarbage: [],
+      transportGoodsGarbage: [],
+      cargoBookingGarbage: [],
+      containerGarbage: [],
+      importExportGarbage: [],
+      shipGarbage: [],
+      familyPropertyGarbage: [],
+      specialPropertyGarbage: [],
+      personalPropertyGarbage: [],
+      publicResponsibilityGarbage: [],
+      professionGarbage: [],
+      otherGarbage: [],
+      yjxGarbage: [],
+      nxGarbage: []
     }
   },
   setup () {
     return {}
   },
   methods: {
+    closePage () {
+      window.open('about:blank', '_top').close()
+    },
+    nxRemoveTag (tag, row) {
+      this.nxGarbage.push(tag)
+    },
+    yjxRemoveTag (tag, row) {
+      this.yjxGarbage.push(tag)
+    },
+    otherRemoveTag (tag, row) {
+      this.otherGarbage.push(tag)
+    },
+    professionRemoveTag (tag, row) {
+      this.professionGarbage.push(tag)
+    },
+    publicResponsibilityRemoveTag (tag, row) {
+      this.publicResponsibilityGarbage.push(tag)
+    },
+    personalPropertyRemoveTag (tag, row) {
+      this.personalPropertyGarbage.push(tag)
+    },
+    specialPropertyRemoveTag (tag, row) {
+      this.specialPropertyGarbage.push(tag)
+    },
+    familyPropertyRemoveTag (tag, row) {
+      this.familyPropertyGarbage.push(tag)
+    },
+    shipRemoveTag (tag, row) {
+      this.shipGarbage.push(tag)
+    },
+    importExportRemoveTag (tag, row) {
+      this.importExportGarbage.push(tag)
+    },
+    containerRemoveTag (tag, row) {
+      this.containerGarbage.push(tag)
+    },
+    cargoBookingRemoveTag (tag, row) {
+      this.cargoBookingGarbage.push(tag)
+    },
+    transportGoodsRemoveTag (tag, row) {
+      this.transportGoodsGarbage.push(tag)
+    },
+    ensureRemoveTag (tag, row) {
+      this.ensureGarbage.push(tag)
+    },
+    creditRemoveTag (tag, row) {
+      this.creditGarbage.push(tag)
+    },
+    otherResponsibilitiesRemoveTag (tag, row) {
+      this.otherResponsibilitiesGarbage.push(tag)
+    },
+    professionalResponsibilityRemoveTag (tag, row) {
+      this.professionalResponsibilityGarbage.push(tag)
+    },
+    productLiabilityRemoveTag (tag, row) {
+      this.productLiabilityGarbage.push(tag)
+    },
+    employerLiabilityRemoveTag (tag, row) {
+      this.employerLiabilityGarbage.push(tag)
+    },
+    publicLiabilityRemoveTag (tag, row) {
+      this.publicLiabilityGarbage.push(tag)
+    },
+    nuclearEnergyRemoveTag (tag, row) {
+      this.nuclearEnergyGarbage.push(tag)
+    },
+    aviationRemoveTag (tag, row) {
+      this.aviationGarbage.push(tag)
+    },
+    oilRemoveTag (tag, row) {
+      this.oilGarbage.push(tag)
+    },
+    specialComprehensiveRemoveTag (tag, row) {
+      this.specialComprehensiveGarbage.push(tag)
+    },
+    specialSubjectRemoveTag (tag, row) {
+      this.specialSubjectGarbage.push(tag)
+    },
+    engineeringAllRisksRemoveTag (tag, row) {
+      this.engineeringAllRisksGarbage.push(tag)
+    },
+    specifyingLiabilityRemoveTag (tag, row) {
+      this.specifyingLiabilityGarbage.push(tag)
+    },
+    businessPropertyInsuranceRemoveTag (tag, row) {
+      this.businessPropertyInsuranceGarbage.push(tag)
+    },
     queryLevel (row) {
       this.$refs.resultsForm.validate(valid => {
         if (valid) {
@@ -944,14 +1063,16 @@ export default {
               sx: this.sx.length ? this.sx.join(',') : '',
               sxrisk: sxrisk.length ? sxrisk.join(',') : '',
               gcgz: this.gcgz.length ? this.gcgz.join(',') : '',
-              gcgzrisk: gcgzrisk.length ? gcgzrisk.join(',') : ''
+              gcgzrisk: gcgzrisk.length ? gcgzrisk.join(',') : '',
+              yjx: this.yjx.length ? this.yjx.join(',') : '',
+              yjxrisk: yjxrisk.length ? yjxrisk.join(',') : '',
+              nx: this.nx.length ? this.nx.join(',') : '',
+              nxrisk: nxrisk.length ? nxrisk.join(',') : ''
 
               // zb: '146',
               // zbrisk: '15-16,16-16,17-16,18-16,19-16,21-16,22-16,36-16,34-16',
               // hyx: '106',
               // hyxrisk: '10-16',
-              // yjx: '21',
-              // yjxrisk: '27-6'
             }
           })
           // 提交申请
@@ -960,8 +1081,8 @@ export default {
             // fdid: getToken('oaAuto-Token').fdid,
             // docCreator: getToken('oaAuto-Token').docCreator,
             actionType: 'upNodePermissions',
-            docCreator: getToken('oaAuto-Token').fdid,
-            fdid: getToken('oaAuto-Token').docCreator,
+            docCreator: getToken('oaAuto-Token').docCreator,
+            fdid: getToken('oaAuto-Token').fdid,
             info: parmaData
           })
         }
@@ -1097,6 +1218,50 @@ export default {
         resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
       }
       this.gcgzOtpions = resQueryModelNodeArr.map(item => {
+        let tempArr = item.split('--')
+        return { label: tempArr[1], value: tempArr[0] }
+      })
+    })
+    // 意健险模板
+    dualCorePermissions({
+      'fieldValue': 'yjx',
+      'codeType': 'queryModel',
+      'actionType': 'query'
+    }).then(async res => {
+      let resQueryModelNodeArr = []
+      this.yjx = res.codeLabels
+      for (const element of res.codeLabels) {
+        // 级别
+        let resQueryModelNode = await dualCorePermissions({
+          'fieldValue': element,
+          'codeType': 'queryModelNode',
+          'actionType': 'query'
+        })
+        resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
+      }
+      this.yjxOtpions = resQueryModelNodeArr.map(item => {
+        let tempArr = item.split('--')
+        return { label: tempArr[1], value: tempArr[0] }
+      })
+    })
+    // 农险模板
+    dualCorePermissions({
+      'fieldValue': 'nx',
+      'codeType': 'queryModel',
+      'actionType': 'query'
+    }).then(async res => {
+      let resQueryModelNodeArr = []
+      this.nx = res.codeLabels
+      for (const element of res.codeLabels) {
+        // 级别
+        let resQueryModelNode = await dualCorePermissions({
+          'fieldValue': element,
+          'codeType': 'queryModelNode',
+          'actionType': 'query'
+        })
+        resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
+      }
+      this.nxOtpions = resQueryModelNodeArr.map(item => {
         let tempArr = item.split('--')
         return { label: tempArr[1], value: tempArr[0] }
       })
