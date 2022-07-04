@@ -1,4 +1,4 @@
-import { dualCorePermissions } from '@/api/oaAuto.js'
+import { dualCorePermissions, getOAUploadCount } from '@/api/oaAuto.js'
 import { getToken } from '@/utils/auth' // 验权
 import nxUploadExcelComponent from '@/components/nx-upload-excel'
 
@@ -8,6 +8,7 @@ export default {
   props: [],
   data () {
     return {
+      formDisable: false,
       oaPageUploadCount: 30, // 上传最大行数
       results: [], // 表格数据
       docStatus: true, // 展示按按钮
@@ -25,6 +26,19 @@ export default {
     return {}
   },
   methods: {
+    initPage () {
+      if (getToken('oaAutoupNodePermissionsReplaceMessageReplaceApplyTask') && getToken('oaAutoupNodePermissionsReplaceMessageReplaceApplyTask').length > 0) {
+        // this.results = getToken('oaAutoupNodePermissionsReplaceMessageReplaceApplyTask')
+        this.results = getToken('oaAutoupNodePermissionsReplaceMessageReplaceApplyTask').map(item => {
+          return {
+            'old_workNumber': item.beforeUserCode,
+            'old_nameUnderwriter': item.beforeUserName,
+            'workNumber': item.usercode,
+            'nameUnderwriter': item.usercname
+          }
+        })
+      }
+    },
     closePage () {
       window.open('about:blank', '_top').close()
     },
@@ -134,6 +148,20 @@ export default {
         docCreator: getToken('oaAuto-Token').fdid,
         fdid: getToken('oaAuto-Token').docCreator,
         info: parmaData
+      }).then(res => {
+        if (res.flag === '1') {
+          // this.$confirm('双核权限申请岗位换人申请提交成功, 是否退出页面?', '提示', {
+          //   confirmButtonText: '确定',
+          //   cancelButtonText: '取消',
+          //   type: 'success'
+          // }).then(() => {
+          //   this.closePage()
+          // })
+          this.$message.success('双核权限申请岗位换人申请提交成功')
+          setTimeout(() => {
+            this.closePage()
+          }, 3000)
+        }
       })
     },
     handleAdd () {
@@ -189,7 +217,6 @@ export default {
     },
     old_workNumberRemoteMethod (query) {
       if (query !== '') {
-        debugger
         dualCorePermissions({
           'fieldValue': query,
           'codeType': 'userCode',
@@ -251,114 +278,153 @@ export default {
   watch: {},
   // 声明周期函数
   beforeCreate () { },
-  created () { },
+  created () {
+    console.log('created this.$router.query', this.$route.query.initData)
+    if (getToken('oaAuto-Token').docStatus !== '1') {
+      this.formDisable = true
+    } else {
+      this.formDisable = false
+    }
+    getOAUploadCount({
+      actionType: 'oaUploadCount',
+      queryParam: 'SWT_BIZ_OApageCount'
+    }).then(res => {
+      console.log('-----请求前端导入条数接口返回结果-----', JSON.stringify(res))
+      if (res.flag === '1') {
+        this.oaPageUploadCount = res.uploadCount
+      }
+    }).catch(error => {
+      // this.queryDisable = false
+      console.log('-----请求前端导入条数接口返回结果报错-----' + error)
+    })
+    this.initPage()
+  },
   beforeMount () { },
   async mounted () {
-    // 企工特模板
-    dualCorePermissions({
-      'fieldValue': 'qgt',
-      'codeType': 'queryModel',
-      'actionType': 'query'
-    }).then(async res => {
-      let resQueryModelNodeArr = []
-      for (const element of res.codeLabels) {
-        // 级别
-        let resQueryModelNode = await dualCorePermissions({
-          'fieldValue': element,
-          'codeType': 'queryModelNode',
-          'actionType': 'query'
-        })
-        resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
-      }
-      this.qgtOtpions = resQueryModelNodeArr.map(item => {
-        let tempArr = item.split('--')
-        return { label: tempArr[1], value: tempArr[0] }
-      })
-    })
-    // 责任险模板
-    dualCorePermissions({
-      'fieldValue': 'zrx',
-      'codeType': 'queryModel',
-      'actionType': 'query'
-    }).then(async res => {
-      let resQueryModelNodeArr = []
-      for (const element of res.codeLabels) {
-        // 级别
-        let resQueryModelNode = await dualCorePermissions({
-          'fieldValue': element,
-          'codeType': 'queryModelNode',
-          'actionType': 'query'
-        })
-        resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
-      }
-      this.zrxOtpions = resQueryModelNodeArr.map(item => {
-        let tempArr = item.split('--')
-        return { label: tempArr[1], value: tempArr[0] }
-      })
-    })
-    // 信用险和保证险模板
-    dualCorePermissions({
-      'fieldValue': 'xyxybzx',
-      'codeType': 'queryModel',
-      'actionType': 'query'
-    }).then(async res => {
-      let resQueryModelNodeArr = []
-      for (const element of res.codeLabels) {
-        // 级别
-        let resQueryModelNode = await dualCorePermissions({
-          'fieldValue': element,
-          'codeType': 'queryModelNode',
-          'actionType': 'query'
-        })
-        resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
-      }
-      this.xyxhbzxOtpions = resQueryModelNodeArr.map(item => {
-        let tempArr = item.split('--')
-        return { label: tempArr[1], value: tempArr[0] }
-      })
-    })
-    // 水险模板
-    dualCorePermissions({
-      'fieldValue': 'sx',
-      'codeType': 'queryModel',
-      'actionType': 'query'
-    }).then(async res => {
-      let resQueryModelNodeArr = []
-      for (const element of res.codeLabels) {
-        // 级别
-        let resQueryModelNode = await dualCorePermissions({
-          'fieldValue': element,
-          'codeType': 'queryModelNode',
-          'actionType': 'query'
-        })
-        resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
-      }
-      this.sxOtpions = resQueryModelNodeArr.map(item => {
-        let tempArr = item.split('--')
-        return { label: tempArr[1], value: tempArr[0] }
-      })
-    })
-    // 个财个责模板
-    dualCorePermissions({
-      'fieldValue': 'gcgz',
-      'codeType': 'queryModel',
-      'actionType': 'query'
-    }).then(async res => {
-      let resQueryModelNodeArr = []
-      for (const element of res.codeLabels) {
-        // 级别
-        let resQueryModelNode = await dualCorePermissions({
-          'fieldValue': element,
-          'codeType': 'queryModelNode',
-          'actionType': 'query'
-        })
-        resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
-      }
-      this.gcgzOtpions = resQueryModelNodeArr.map(item => {
-        let tempArr = item.split('--')
-        return { label: tempArr[1], value: tempArr[0] }
-      })
-    })
+    // dualCorePermissions({
+    //   'actionType': 'oaAutoLoad',
+    //   'docCreator': getToken('oaAuto-Token').docCreator,
+    //   // 'fdid': getToken('oaAuto-Token').fdid,
+    //   'fdDocId': getToken('oaAuto-Token').fdid,
+    //   // 'fdDocId': '18190132a35809421c49a72473db86ef',
+    //   'docStatus': '20'
+    // }).then(res => {
+    //   this.tableDisable = res.docStatus
+    //   this.results = res.codeValues
+    //   this.results = res.codeValues.map(item => {
+    //     return {
+    //       'old_workNumber': item.beforeUserCode,
+    //       'old_nameUnderwriter': item.beforeUserName,
+    //       'workNumber': item.usercode,
+    //       'nameUnderwriter': item.usercname
+    //     }
+    //   })
+    // })
+    // // 企工特模板
+    // dualCorePermissions({
+    //   'fieldValue': 'qgt',
+    //   'codeType': 'queryModel',
+    //   'actionType': 'query'
+    // }).then(async res => {
+    //   let resQueryModelNodeArr = []
+    //   for (const element of res.codeLabels) {
+    //     // 级别
+    //     let resQueryModelNode = await dualCorePermissions({
+    //       'fieldValue': element,
+    //       'codeType': 'queryModelNode',
+    //       'actionType': 'query'
+    //     })
+    //     resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
+    //   }
+    //   this.qgtOtpions = resQueryModelNodeArr.map(item => {
+    //     let tempArr = item.split('--')
+    //     return { label: tempArr[1], value: tempArr[0] }
+    //   })
+    // })
+    // // 责任险模板
+    // dualCorePermissions({
+    //   'fieldValue': 'zrx',
+    //   'codeType': 'queryModel',
+    //   'actionType': 'query'
+    // }).then(async res => {
+    //   let resQueryModelNodeArr = []
+    //   for (const element of res.codeLabels) {
+    //     // 级别
+    //     let resQueryModelNode = await dualCorePermissions({
+    //       'fieldValue': element,
+    //       'codeType': 'queryModelNode',
+    //       'actionType': 'query'
+    //     })
+    //     resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
+    //   }
+    //   this.zrxOtpions = resQueryModelNodeArr.map(item => {
+    //     let tempArr = item.split('--')
+    //     return { label: tempArr[1], value: tempArr[0] }
+    //   })
+    // })
+    // // 信用险和保证险模板
+    // dualCorePermissions({
+    //   'fieldValue': 'xyxybzx',
+    //   'codeType': 'queryModel',
+    //   'actionType': 'query'
+    // }).then(async res => {
+    //   let resQueryModelNodeArr = []
+    //   for (const element of res.codeLabels) {
+    //     // 级别
+    //     let resQueryModelNode = await dualCorePermissions({
+    //       'fieldValue': element,
+    //       'codeType': 'queryModelNode',
+    //       'actionType': 'query'
+    //     })
+    //     resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
+    //   }
+    //   this.xyxhbzxOtpions = resQueryModelNodeArr.map(item => {
+    //     let tempArr = item.split('--')
+    //     return { label: tempArr[1], value: tempArr[0] }
+    //   })
+    // })
+    // // 水险模板
+    // dualCorePermissions({
+    //   'fieldValue': 'sx',
+    //   'codeType': 'queryModel',
+    //   'actionType': 'query'
+    // }).then(async res => {
+    //   let resQueryModelNodeArr = []
+    //   for (const element of res.codeLabels) {
+    //     // 级别
+    //     let resQueryModelNode = await dualCorePermissions({
+    //       'fieldValue': element,
+    //       'codeType': 'queryModelNode',
+    //       'actionType': 'query'
+    //     })
+    //     resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
+    //   }
+    //   this.sxOtpions = resQueryModelNodeArr.map(item => {
+    //     let tempArr = item.split('--')
+    //     return { label: tempArr[1], value: tempArr[0] }
+    //   })
+    // })
+    // // 个财个责模板
+    // dualCorePermissions({
+    //   'fieldValue': 'gcgz',
+    //   'codeType': 'queryModel',
+    //   'actionType': 'query'
+    // }).then(async res => {
+    //   let resQueryModelNodeArr = []
+    //   for (const element of res.codeLabels) {
+    //     // 级别
+    //     let resQueryModelNode = await dualCorePermissions({
+    //       'fieldValue': element,
+    //       'codeType': 'queryModelNode',
+    //       'actionType': 'query'
+    //     })
+    //     resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
+    //   }
+    //   this.gcgzOtpions = resQueryModelNodeArr.map(item => {
+    //     let tempArr = item.split('--')
+    //     return { label: tempArr[1], value: tempArr[0] }
+    //   })
+    // })
   },
   beforeUpdate () { },
   updated () { },

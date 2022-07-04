@@ -25,7 +25,7 @@
         </div>
         <div class="table-base table-select-width-full">
           <el-form ref="resultsForm" :model="results" label-width="80px">
-            <el-table :data="results" style="width: 100%;margin-bottom: 20px;" border>
+            <el-table :disabled="formDisable" :data="results" style="width: 100%;margin-bottom: 20px;" border>
 
               <el-table-column align="center" type="index" label="序号" width="60" fixed="left" class-name="SerialNumber">
               </el-table-column>
@@ -117,15 +117,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="businessPropertyInsuranceRemoveTag" multiple
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { businessPropertyInsuranceRemoveTag(tag, scope.row) }" multiple
                       v-model="scope.row.businessPropertyInsurance" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="businessPropertyInsuranceGarbage.length" multiple
-                        v-model="businessPropertyInsuranceGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'businessPropertyInsuranceGarbage' in scope.row ? scope.row.businessPropertyInsuranceGarbage.length : false"
+                        multiple @remove-tag="(tag) => { businessPropertyInsuranceGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.businessPropertyInsuranceGarbage">
                         <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -144,15 +147,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="specifyingLiabilityRemoveTag" multiple
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { specifyingLiabilityRemoveTag(tag, scope.row) }" multiple
                       v-model="scope.row.specifyingLiability" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="specifyingLiabilityGarbage.length" multiple
-                        v-model="specifyingLiabilityGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'specifyingLiabilityGarbage' in scope.row ? scope.row.specifyingLiabilityGarbage.length : false"
+                        multiple @remove-tag="(tag) => { specifyingLiabilityGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.specifyingLiabilityGarbage">
                         <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -171,15 +177,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="engineeringAllRisksRemoveTag" multiple
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { engineeringAllRisksRemoveTag(tag, scope.row) }" multiple
                       v-model="scope.row.engineeringAllRisks" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="engineeringAllRisksGarbage.length" multiple
-                        v-model="engineeringAllRisksGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'engineeringAllRisksGarbage' in scope.row ? scope.row.engineeringAllRisksGarbage.length : false"
+                        multiple @remove-tag="(tag) => { engineeringAllRisksGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.engineeringAllRisksGarbage">
                         <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -199,15 +208,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="specialSubjectRemoveTag" multiple v-model="scope.row.specialSubject"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { specialSubjectRemoveTag(tag, scope.row) }" multiple
+                      v-model="scope.row.specialSubject" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="specialSubjectGarbage.length" multiple
-                        v-model="specialSubjectGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'specialSubjectGarbage' in scope.row ? scope.row.specialSubjectGarbage.length : false"
+                        multiple @remove-tag="(tag) => { specialSubjectGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.specialSubjectGarbage">
                         <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -227,15 +239,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="specialComprehensiveRemoveTag" multiple
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { specialComprehensiveRemoveTag(tag, scope.row) }" multiple
                       v-model="scope.row.specialComprehensive" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="specialComprehensiveGarbage.length" multiple
-                        v-model="specialComprehensiveGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'specialComprehensiveGarbage' in scope.row ? scope.row.specialComprehensiveGarbage.length : false"
+                        multiple @remove-tag="(tag) => { specialComprehensiveGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.specialComprehensiveGarbage">
                         <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -255,13 +270,16 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="oilRemoveTag" multiple v-model="scope.row.oil" placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag) => { oilRemoveTag(tag, scope.row) }" multiple
+                      v-model="scope.row.oil" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="oilGarbage.length" multiple v-model="oilGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'oilGarbage' in scope.row ? scope.row.oilGarbage.length : false" multiple
+                        @remove-tag="(tag) => { oilGarbageRemoveTag(tag, scope.row) }" v-model="scope.row.oilGarbage">
                         <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -281,14 +299,17 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="aviationRemoveTag" multiple v-model="scope.row.aviation" placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag) => { aviationRemoveTag(tag, scope.row) }"
+                      multiple v-model="scope.row.aviation" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="aviationGarbage.length" multiple
-                        v-model="aviationGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'aviationGarbage' in scope.row ? scope.row.aviationGarbage.length : false" multiple
+                        @remove-tag="(tag) => { aviationGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.aviationGarbage">
                         <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -308,15 +329,17 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="nuclearEnergyRemoveTag" multiple v-model="scope.row.nuclearEnergy"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag) => { nuclearEnergyRemoveTag(tag, scope.row) }"
+                      multiple v-model="scope.row.nuclearEnergy" placeholder="无权限">
                       <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="nuclearEnergyGarbage.length" multiple
-                        v-model="nuclearEnergyGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'nuclearEnergyGarbage' in scope.row ? scope.row.nuclearEnergyGarbage.length : false"
+                        multiple @remove-tag="(tag) => { nuclearEnergyGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.nuclearEnergyGarbage">
                         <el-option v-for="(item, index) in qgtOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -339,15 +362,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="publicLiabilityRemoveTag" multiple v-model="scope.row.publicLiability"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { publicLiabilityRemoveTag(tag, scope.row) }" multiple
+                      v-model="scope.row.publicLiability" placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="publicLiabilityGarbage.length" multiple
-                        v-model="publicLiabilityGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'publicLiabilityGarbage' in scope.row ? scope.row.publicLiabilityGarbage.length : false"
+                        multiple @remove-tag="(tag) => { publicLiabilityGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.publicLiabilityGarbage">
                         <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -367,15 +393,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="employerLiabilityRemoveTag" multiple v-model="scope.row.employerLiability"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { employerLiabilityRemoveTag(tag, scope.row) }" multiple
+                      v-model="scope.row.employerLiability" placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="employerLiabilityGarbage.length" multiple
-                        v-model="employerLiabilityGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'employerLiabilityGarbage' in scope.row ? scope.row.employerLiabilityGarbage.length : false"
+                        multiple @remove-tag="(tag) => { employerLiabilityGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.employerLiabilityGarbage">
                         <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -395,15 +424,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="productLiabilityRemoveTag" multiple v-model="scope.row.productLiability"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { productLiabilityRemoveTag(tag, scope.row) }" multiple
+                      v-model="scope.row.productLiability" placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="productLiabilityGarbage.length" multiple
-                        v-model="productLiabilityGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'productLiabilityGarbage' in scope.row ? scope.row.productLiabilityGarbage.length : false"
+                        multiple @remove-tag="(tag) => { productLiabilityGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.productLiabilityGarbage">
                         <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -423,15 +455,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="professionalResponsibilityRemoveTag" multiple
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { professionalResponsibilityRemoveTag(tag, scope.row) }" multiple
                       v-model="scope.row.professionalResponsibility" placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="professionalResponsibilityGarbage.length" multiple
-                        v-model="professionalResponsibilityGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'professionalResponsibilityGarbage' in scope.row ? scope.row.professionalResponsibilityGarbage.length : false"
+                        multiple @remove-tag="(tag) => { professionalResponsibilityGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.professionalResponsibilityGarbage">
                         <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -451,15 +486,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="otherResponsibilitiesRemoveTag" multiple
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { otherResponsibilitiesRemoveTag(tag, scope.row) }" multiple
                       v-model="scope.row.otherResponsibilities" placeholder="无权限">
                       <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="otherResponsibilitiesGarbage.length" multiple
-                        v-model="otherResponsibilitiesGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'otherResponsibilitiesGarbage' in scope.row ? scope.row.otherResponsibilitiesGarbage.length : false"
+                        multiple @remove-tag="(tag) => { otherResponsibilitiesGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.otherResponsibilitiesGarbage">
                         <el-option v-for="(item, index) in zrxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -482,13 +520,17 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="creditRemoveTag" multiple v-model="scope.row.credit" placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag) => { creditRemoveTag(tag, scope.row) }"
+                      multiple v-model="scope.row.credit" placeholder="无权限">
                       <el-option v-for="(item, index) in xyxhbzxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="creditGarbage.length" multiple v-model="creditGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'creditGarbage' in scope.row ? scope.row.creditGarbage.length : false" multiple
+                        @remove-tag="(tag) => { creditGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.creditGarbage">
                         <el-option v-for="(item, index) in xyxhbzxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -508,13 +550,17 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="ensureRemoveTag" multiple v-model="scope.row.ensure" placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag) => { ensureRemoveTag(tag, scope.row) }"
+                      multiple v-model="scope.row.ensure" placeholder="无权限">
                       <el-option v-for="(item, index) in xyxhbzxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="ensureGarbage.length" multiple v-model="ensureGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'ensureGarbage' in scope.row ? scope.row.ensureGarbage.length : false" multiple
+                        @remove-tag="(tag) => { ensureGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.ensureGarbage">
                         <el-option v-for="(item, index) in xyxhbzxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -537,15 +583,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="transportGoodsRemoveTag" multiple v-model="scope.row.transportGoods"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { transportGoodsRemoveTag(tag, scope.row) }" multiple
+                      v-model="scope.row.transportGoods" placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="transportGoodsGarbage.length" multiple
-                        v-model="transportGoodsGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'transportGoodsGarbage' in scope.row ? scope.row.transportGoodsGarbage.length : false"
+                        multiple @remove-tag="(tag) => { transportGoodsGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.transportGoodsGarbage">
                         <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -565,15 +614,17 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="cargoBookingRemoveTag" multiple v-model="scope.row.cargoBooking"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag) => { cargoBookingRemoveTag(tag, scope.row) }"
+                      multiple v-model="scope.row.cargoBooking" placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="cargoBookingGarbage.length" multiple
-                        v-model="cargoBookingGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'cargoBookingGarbage' in scope.row ? scope.row.cargoBookingGarbage.length : false"
+                        multiple @remove-tag="(tag) => { cargoBookingGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.cargoBookingGarbage">
                         <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -593,15 +644,17 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="containerRemoveTag" multiple v-model="scope.row.container"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag) => { containerRemoveTag(tag, scope.row) }"
+                      multiple v-model="scope.row.container" placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="containerGarbage.length" multiple
-                        v-model="containerGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'containerGarbage' in scope.row ? scope.row.containerGarbage.length : false" multiple
+                        @remove-tag="(tag) => { containerGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.containerGarbage">
                         <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -621,15 +674,17 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="importExportRemoveTag" multiple v-model="scope.row.importExport"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag) => { importExportRemoveTag(tag, scope.row) }"
+                      multiple v-model="scope.row.importExport" placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="importExportGarbage.length" multiple
-                        v-model="importExportGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'importExportGarbage' in scope.row ? scope.row.importExportGarbage.length : false"
+                        multiple @remove-tag="(tag) => { importExportGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.importExportGarbage">
                         <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -649,13 +704,16 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="shipRemoveTag" multiple v-model="scope.row.ship" placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag) => { shipRemoveTag(tag, scope.row) }" multiple
+                      v-model="scope.row.ship" placeholder="无权限">
                       <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="shipGarbage.length" multiple v-model="shipGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'shipGarbage' in scope.row ? scope.row.shipGarbage.length : false" multiple
+                        @remove-tag="(tag) => { shipGarbageRemoveTag(tag, scope.row) }" v-model="scope.row.shipGarbage">
                         <el-option v-for="(item, index) in sxOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -678,15 +736,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="familyPropertyRemoveTag" multiple v-model="scope.row.familyProperty"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { familyPropertyRemoveTag(tag, scope.row) }" multiple
+                      v-model="scope.row.familyProperty" placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="familyPropertyGarbage.length" multiple
-                        v-model="familyPropertyGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'familyPropertyGarbage' in scope.row ? scope.row.familyPropertyGarbage.length : false"
+                        multiple @remove-tag="(tag) => { familyPropertyGarbageRemoveTag(tag, scope.row) }"
+                        v-model="scope.row.familyPropertyGarbage">
                         <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -706,15 +767,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag="specialPropertyRemoveTag" multiple v-model="scope.row.specialProperty"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag) => { specialPropertyRemoveTag(tag, scope.row) }" multiple
+                      v-model="scope.row.specialProperty" placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="specialPropertyGarbage.length" multiple
-                        v-model="specialPropertyGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'specialPropertyGarbage' in scope.row ? scope.row.specialPropertyGarbage.length:false"
+                        multiple @remove-tag="(tag)=>{specialPropertyGarbageRemoveTag(tag,scope.row)}"
+                        v-model="scope.row.specialPropertyGarbage">
                         <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -734,15 +798,17 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag=" personalPropertyRemoveTag" multiple v-model="scope.row.personalProperty"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag)=>{ personalPropertyRemoveTag(tag,scope.row)}"
+                      multiple v-model="scope.row.personalProperty" placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="personalPropertyGarbage.length" multiple
-                        v-model="personalPropertyGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'personalPropertyGarbage' in scope.row ? scope.row.personalPropertyGarbage.length:false"
+                        multiple @remove-tag="(tag)=>{personalPropertyGarbageRemoveTag(tag,scope.row)}"
+                        v-model="scope.row.personalPropertyGarbage">
                         <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -762,15 +828,18 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag=" publicResponsibilityRemoveTag" multiple
+                    <el-select :disabled="formDisable"
+                      @remove-tag="(tag)=>{ publicResponsibilityRemoveTag(tag,scope.row)}" multiple
                       v-model="scope.row.publicResponsibility" placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="publicResponsibilityGarbage.length" multiple
-                        v-model="publicResponsibilityGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'publicResponsibilityGarbage' in scope.row ? scope.row.publicResponsibilityGarbage.length:false"
+                        multiple @remove-tag="(tag)=>{publicResponsibilityGarbageRemoveTag(tag,scope.row)}"
+                        v-model="scope.row.publicResponsibilityGarbage">
                         <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -790,15 +859,17 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag=" professionRemoveTag" multiple v-model="scope.row.profession"
-                      placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag)=>{ professionRemoveTag(tag,scope.row)}"
+                      multiple v-model="scope.row.profession" placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="professionGarbage.length" multiple
-                        v-model="professionGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'professionGarbage' in scope.row ? scope.row.professionGarbage.length:false" multiple
+                        @remove-tag="(tag)=>{professionGarbageRemoveTag(tag,scope.row)}"
+                        v-model="scope.row.professionGarbage">
                         <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -818,13 +889,16 @@
                     </el-tooltip>
                   </template>
                   <template slot-scope="scope">
-                    <el-select @remove-tag=" otherRemoveTag" multiple v-model="scope.row.other" placeholder="无权限">
+                    <el-select :disabled="formDisable" @remove-tag="(tag)=>{ otherRemoveTag(tag,scope.row)}" multiple
+                      v-model="scope.row.other" placeholder="无权限">
                       <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                     <el-row>
-                      <el-select class="garbage_class" v-show="otherGarbage.length" multiple v-model="otherGarbage">
+                      <el-select class="garbage_class"
+                        v-if="'otherGarbage' in scope.row ? scope.row.otherGarbage.length:false" multiple
+                        @remove-tag="(tag)=>{otherGarbageRemoveTag(tag,scope.row)}" v-model="scope.row.otherGarbage">
                         <el-option v-for="(item, index) in gcgzOtpions" :key="item.value + index + scope.$index"
                           :label="item.label" :value="item.value">
                         </el-option>
@@ -846,13 +920,15 @@
                   </el-tooltip>
                 </template> -->
                 <template slot-scope="scope">
-                  <el-select @remove-tag=" yjxRemoveTag" multiple v-model="scope.row.yjx" placeholder="无权限">
+                  <el-select :disabled="formDisable" @remove-tag="(tag)=>{ yjxRemoveTag(tag,scope.row)}" multiple
+                    v-model="scope.row.yjx" placeholder="无权限">
                     <el-option v-for="(item, index) in yjxOtpions" :key="item.value + index + scope.$index"
                       :label="item.label" :value="item.value">
                     </el-option>
                   </el-select>
                   <el-row>
-                    <el-select class="garbage_class" v-show="yjxGarbage.length" multiple v-model="yjxGarbage">
+                    <el-select class="garbage_class" v-if="'yjxGarbage' in scope.row ? scope.row.yjxGarbage.length:false"
+                      multiple @remove-tag="(tag)=>{yjxGarbageRemoveTag(tag,scope.row)}" v-model="scope.row.yjxGarbage">
                       <el-option v-for="(item, index) in yjxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>
@@ -872,13 +948,15 @@
                   </el-tooltip>
                 </template> -->
                 <template slot-scope="scope">
-                  <el-select @remove-tag=" nxRemoveTag" multiple v-model="scope.row.nx" placeholder="无权限">
+                  <el-select :disabled="formDisable" @remove-tag="(tag)=>{ nxRemoveTag(tag,scope.row)}" multiple
+                    v-model="scope.row.nx" placeholder="无权限">
                     <el-option v-for="(item, index) in nxOtpions" :key="item.value + index + scope.$index"
                       :label="item.label" :value="item.value">
                     </el-option>
                   </el-select>
                   <el-row>
-                    <el-select class="garbage_class" v-show="nxGarbage.length" multiple v-model="nxGarbage">
+                    <el-select class="garbage_class" v-if="'nxGarbage' in scope.row ? scope.row.nxGarbage.length:false"
+                      multiple @remove-tag="(tag)=>{nxGarbageRemoveTag(tag,scope.row)}" v-model="scope.row.nxGarbage">
                       <el-option v-for="(item, index) in nxOtpions" :key="item.value + index + scope.$index"
                         :label="item.label" :value="item.value">
                       </el-option>

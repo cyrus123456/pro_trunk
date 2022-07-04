@@ -1,4 +1,4 @@
-import { dualCorePermissions } from '@/api/oaAuto.js'
+import { dualCorePermissions, getOAUploadCount } from '@/api/oaAuto.js'
 import { getToken } from '@/utils/auth' // 验权
 import nxUploadExcelComponent from '@/components/nx-upload-excel'
 
@@ -8,6 +8,7 @@ export default {
   props: [],
   data () {
     return {
+      formDisable: false,
       requiredRules: [
         { required: true, message: '不能为空', trigger: ['blur', 'change'] }
       ],
@@ -514,92 +515,214 @@ export default {
     return {}
   },
   methods: {
+    initPage () {
+      if (getToken('oaAutoplatformupNodePermissionsTask') && getToken('oaAutoplatformupNodePermissionsTask').length > 0) {
+        this.results = getToken('oaAutoplatformupNodePermissionsTask')
+        this.results.forEach(item => {
+          if (!this.results.some(itemsome => {
+            return itemsome.workNumber === item.workNumber &&
+              itemsome.nameUnderwriter === item.nameUnderwriter &&
+              itemsome.comcode === item.comcode &&
+              itemsome.comname === item.comname
+          })) {
+            this.initqueryLevel(item)
+          }
+        })
+      }
+    },
     closePage () {
       window.open('about:blank', '_top').close()
     },
     nxRemoveTag (tag, row) {
-      this.nxGarbage.push(tag)
+      row.nxGarbage.push(tag)
     },
     yjxRemoveTag (tag, row) {
-      this.yjxGarbage.push(tag)
+      row.yjxGarbage.push(tag)
     },
     otherRemoveTag (tag, row) {
-      this.otherGarbage.push(tag)
+      row.otherGarbage.push(tag)
     },
     professionRemoveTag (tag, row) {
-      this.professionGarbage.push(tag)
+      row.professionGarbage.push(tag)
     },
     publicResponsibilityRemoveTag (tag, row) {
-      this.publicResponsibilityGarbage.push(tag)
+      row.publicResponsibilityGarbage.push(tag)
     },
     personalPropertyRemoveTag (tag, row) {
-      this.personalPropertyGarbage.push(tag)
+      row.personalPropertyGarbage.push(tag)
     },
     specialPropertyRemoveTag (tag, row) {
-      this.specialPropertyGarbage.push(tag)
+      row.specialPropertyGarbage.push(tag)
     },
     familyPropertyRemoveTag (tag, row) {
-      this.familyPropertyGarbage.push(tag)
+      row.familyPropertyGarbage.push(tag)
     },
     shipRemoveTag (tag, row) {
-      this.shipGarbage.push(tag)
+      row.shipGarbage.push(tag)
     },
     importExportRemoveTag (tag, row) {
-      this.importExportGarbage.push(tag)
+      row.importExportGarbage.push(tag)
     },
     containerRemoveTag (tag, row) {
-      this.containerGarbage.push(tag)
+      row.containerGarbage.push(tag)
     },
     cargoBookingRemoveTag (tag, row) {
-      this.cargoBookingGarbage.push(tag)
+      row.cargoBookingGarbage.push(tag)
     },
     transportGoodsRemoveTag (tag, row) {
-      this.transportGoodsGarbage.push(tag)
+      row.transportGoodsGarbage.push(tag)
     },
     ensureRemoveTag (tag, row) {
-      this.ensureGarbage.push(tag)
+      row.ensureGarbage.push(tag)
     },
     creditRemoveTag (tag, row) {
-      this.creditGarbage.push(tag)
+      row.creditGarbage.push(tag)
     },
     otherResponsibilitiesRemoveTag (tag, row) {
-      this.otherResponsibilitiesGarbage.push(tag)
+      row.otherResponsibilitiesGarbage.push(tag)
     },
     professionalResponsibilityRemoveTag (tag, row) {
-      this.professionalResponsibilityGarbage.push(tag)
+      row.professionalResponsibilityGarbage.push(tag)
     },
     productLiabilityRemoveTag (tag, row) {
-      this.productLiabilityGarbage.push(tag)
+      row.productLiabilityGarbage.push(tag)
     },
     employerLiabilityRemoveTag (tag, row) {
-      this.employerLiabilityGarbage.push(tag)
+      row.employerLiabilityGarbage.push(tag)
     },
     publicLiabilityRemoveTag (tag, row) {
-      this.publicLiabilityGarbage.push(tag)
+      row.publicLiabilityGarbage.push(tag)
     },
     nuclearEnergyRemoveTag (tag, row) {
-      this.nuclearEnergyGarbage.push(tag)
+      row.nuclearEnergyGarbage.push(tag)
     },
     aviationRemoveTag (tag, row) {
-      this.aviationGarbage.push(tag)
+      row.aviationGarbage.push(tag)
     },
     oilRemoveTag (tag, row) {
-      this.oilGarbage.push(tag)
+      row.oilGarbage.push(tag)
     },
     specialComprehensiveRemoveTag (tag, row) {
-      this.specialComprehensiveGarbage.push(tag)
+      row.specialComprehensiveGarbage.push(tag)
     },
     specialSubjectRemoveTag (tag, row) {
-      this.specialSubjectGarbage.push(tag)
+      row.specialSubjectGarbage.push(tag)
     },
     engineeringAllRisksRemoveTag (tag, row) {
-      this.engineeringAllRisksGarbage.push(tag)
+      row.engineeringAllRisksGarbage.push(tag)
     },
     specifyingLiabilityRemoveTag (tag, row) {
-      this.specifyingLiabilityGarbage.push(tag)
+      row.specifyingLiabilityGarbage.push(tag)
     },
     businessPropertyInsuranceRemoveTag (tag, row) {
-      this.businessPropertyInsuranceGarbage.push(tag)
+      row.businessPropertyInsuranceGarbage.push(tag)
+    },
+    businessPropertyInsuranceGarbageRemoveTag (tag, row) {
+      row.businessPropertyInsurance(tag)
+    },
+    specifyingLiabilityGarbageRemoveTag (tag, row) {
+      row.specifyingLiability(tag)
+    },
+    engineeringAllRisksGarbageRemoveTag (tag, row) {
+      row.engineeringAllRisks(tag)
+    },
+    specialSubjectGarbageRemoveTag (tag, row) {
+      row.specialSubject(tag)
+    },
+    specialComprehensiveGarbageRemoveTag (tag, row) {
+      row.specialComprehensive(tag)
+    },
+    oilGarbageRemoveTag (tag, row) {
+      row.oil(tag)
+    },
+    aviationGarbageRemoveTag (tag, row) {
+      row.aviation(tag)
+    },
+    nuclearEnergyGarbageRemoveTag (tag, row) {
+      row.nuclearEnergy(tag)
+    },
+    publicLiabilityGarbageRemoveTag (tag, row) {
+      row.publicLiability(tag)
+    },
+    employerLiabilityGarbageRemoveTag (tag, row) {
+      row.employerLiability(tag)
+    },
+    productLiabilityGarbageRemoveTag (tag, row) {
+      row.productLiability(tag)
+    },
+    professionalResponsibilityGarbageRemoveTag (tag, row) {
+      row.professionalResponsibility(tag)
+    },
+    otherResponsibilitiesGarbageRemoveTag (tag, row) {
+      row.otherResponsibilities(tag)
+    },
+    creditGarbageRemoveTag (tag, row) {
+      row.credit(tag)
+    },
+    ensureGarbageRemoveTag (tag, row) {
+      row.ensure(tag)
+    },
+    transportGoodsGarbageRemoveTag (tag, row) {
+      row.transportGoods(tag)
+    },
+    cargoBookingGarbageRemoveTag (tag, row) {
+      row.cargoBooking(tag)
+    },
+    containerGarbageRemoveTag (tag, row) {
+      row.container(tag)
+    },
+    importExportGarbageRemoveTag (tag, row) {
+      row.importExport(tag)
+    },
+    shipGarbageRemoveTag (tag, row) {
+      row.ship(tag)
+    },
+    familyPropertyGarbageRemoveTag (tag, row) {
+      row.familyProperty(tag)
+    },
+    specialPropertyGarbageRemoveTag (tag, row) {
+      row.specialProperty(tag)
+    },
+    personalPropertyGarbageRemoveTag (tag, row) {
+      row.personalProperty(tag)
+    },
+    publicResponsibilityGarbageRemoveTag (tag, row) {
+      row.publicResponsibility(tag)
+    },
+    professionGarbageRemoveTag (tag, row) {
+      row.profession(tag)
+    },
+    otherGarbageRemoveTag (tag, row) {
+      row.other(tag)
+    },
+    yjxGarbageRemoveTag (tag, row) {
+      row.yjx(tag)
+    },
+    nxGarbageRemoveTag (tag, row) {
+      row.nx(tag)
+    },
+    initqueryLevel (row) {
+      this.$refs.resultsForm.validate(valid => {
+        if (valid) {
+          dualCorePermissions({
+            'usercode': row.workNumber,
+            'comcode': row.comcode,
+            'codeType': 'queryExhibition',
+            'actionType': 'query'
+          }).then(async res => {
+            for (const key in res.codeLabels[0]) {
+              if (Object.hasOwnProperty.call(res.codeLabels[0], key)) {
+                const element = res.codeLabels[0][key]
+                let lev = key.split('--')[2]
+                if (!row[element].includes(lev)) {
+                  row[element].push(lev)
+                }
+                // row[element] = [...new Set([...row[element], lev])]// 去重
+              }
+            }
+          })
+        }
+      })
     },
     queryLevel (row) {
       this.$refs.resultsForm.validate(valid => {
@@ -943,7 +1066,36 @@ export default {
         profession: [],
         other: [],
         yjx: [],
-        nx: []
+        nx: [],
+
+        businessPropertyInsuranceGarbage: [],
+        specifyingLiabilityGarbage: [],
+        engineeringAllRisksGarbage: [],
+        specialSubjectGarbage: [],
+        specialComprehensiveGarbage: [],
+        oilGarbage: [],
+        aviationGarbage: [],
+        nuclearEnergyGarbage: [],
+        publicLiabilityGarbage: [],
+        employerLiabilityGarbage: [],
+        productLiabilityGarbage: [],
+        professionalResponsibilityGarbage: [],
+        otherResponsibilitiesGarbage: [],
+        creditGarbage: [],
+        ensureGarbage: [],
+        transportGoodsGarbage: [],
+        cargoBookingGarbage: [],
+        containerGarbage: [],
+        importExportGarbage: [],
+        shipGarbage: [],
+        familyPropertyGarbage: [],
+        specialPropertyGarbage: [],
+        personalPropertyGarbage: [],
+        publicResponsibilityGarbage: [],
+        professionGarbage: [],
+        otherGarbage: [],
+        yjxGarbage: [],
+        nxGarbage: []
       })
     },
     handleDelete (index, row) {
@@ -1002,7 +1154,6 @@ export default {
     },
     businessPropertyInsurance_treeCheck (data) {
       console.log(data)
-      debugger
     },
     commitData () {
       this.$refs.resultsForm.validate(valid => {
@@ -1017,6 +1168,7 @@ export default {
             let nxrisk = []
             for (const key in object) {
               if (Object.hasOwnProperty.call(object, key)) {
+                if (!(`${key}` in this.colNameMap)) continue
                 if (!this.colNameMap[key].numName) continue
                 const element = object[key]
                 for (const iterator of element) {
@@ -1077,13 +1229,24 @@ export default {
           })
           // 提交申请
           dualCorePermissions({
-            // actionType: 'upJfcdSwitchMessage',
-            // fdid: getToken('oaAuto-Token').fdid,
-            // docCreator: getToken('oaAuto-Token').docCreator,
             actionType: 'upNodePermissions',
             docCreator: getToken('oaAuto-Token').docCreator,
             fdid: getToken('oaAuto-Token').fdid,
             info: parmaData
+          }).then(res => {
+            if (res.flag === '1') {
+              // this.$confirm('双核权限申请提交成功, 是否退出页面?', '提示', {
+              //   confirmButtonText: '确定',
+              //   cancelButtonText: '取消',
+              //   type: 'success'
+              // }).then(() => {
+              //   this.closePage()
+              // })
+              this.$message.success('双核权限申请提交成功')
+              setTimeout(() => {
+                this.closePage()
+              }, 3000)
+            }
           })
         }
       })
@@ -1096,6 +1259,25 @@ export default {
   // 声明周期函数
   beforeCreate () { },
   created () {
+    console.log('created this.$router.query', this.$route.query.initData)
+    if (getToken('oaAuto-Token').docStatus !== '1') {
+      this.formDisable = true
+    } else {
+      this.formDisable = false
+    }
+    getOAUploadCount({
+      actionType: 'oaUploadCount',
+      queryParam: 'SWT_BIZ_OApageCount'
+    }).then(res => {
+      console.log('-----请求前端导入条数接口返回结果-----', JSON.stringify(res))
+      if (res.flag === '1') {
+        this.oaPageUploadCount = res.uploadCount
+      }
+    }).catch(error => {
+      // this.queryDisable = false
+      console.log('-----请求前端导入条数接口返回结果报错-----' + error)
+    })
+
     for (const key in this.cloRisk) {
       if (Object.hasOwnProperty.call(this.cloRisk, key)) {
         dualCorePermissions({
@@ -1105,13 +1287,146 @@ export default {
         }).then(resQueryRisk => {
           this.cloRisk[key] = resQueryRisk.codeLabels
           // this.$set(this.cloRisk, key, resQueryRisk.codeLabels)
-          debugger
         })
       }
     }
   },
   beforeMount () { },
   async mounted () {
+    this.initPage()
+
+    // let allResArr = await Promise.allSettled([
+    // // 企工特模板
+    //   dualCorePermissions({
+    //     'fieldValue': 'qgt',
+    //     'codeType': 'queryModel',
+    //     'actionType': 'query'
+    //   }),
+    //   // 责任险模板
+    //   dualCorePermissions({
+    //     'fieldValue': 'zrx',
+    //     'codeType': 'queryModel',
+    //     'actionType': 'query'
+    //   }),
+    //   // 信用险和保证险模板
+    //   dualCorePermissions({
+    //     'fieldValue': 'xyxybzx',
+    //     'codeType': 'queryModel',
+    //     'actionType': 'query'
+    //   }),
+    //   // 水险模板
+    //   dualCorePermissions({
+    //     'fieldValue': 'sx',
+    //     'codeType': 'queryModel',
+    //     'actionType': 'query'
+    //   }),
+    //   // 个财个责模板
+    //   dualCorePermissions({
+    //     'fieldValue': 'gcgz',
+    //     'codeType': 'queryModel',
+    //     'actionType': 'query'
+    //   }),
+    //   // 意健险模板
+    //   dualCorePermissions({
+    //     'fieldValue': 'yjx',
+    //     'codeType': 'queryModel',
+    //     'actionType': 'query'
+    //   }),
+    //   // 农险模板
+    //   dualCorePermissions({
+    //     'fieldValue': 'nx',
+    //     'codeType': 'queryModel',
+    //     'actionType': 'query'
+    //   })
+    // ])
+    // allResArr.forEach(async (res, index) => {
+    //   let resQueryModelNodeArr = []
+    //   for (const element of res.codeLabels) {
+    //     // 级别
+    //     let resQueryModelNode = await dualCorePermissions({
+    //       'fieldValue': element,
+    //       'codeType': 'queryModelNode',
+    //       'actionType': 'query'
+    //     })
+    //     resQueryModelNodeArr.push(...resQueryModelNode.codeLabels)
+    //   }
+    //   switch (index) {
+    //     case 0:
+    //       this.qgt = res.codeLabels
+    //       this.qgtOtpions = resQueryModelNodeArr.map(item => {
+    //         let tempArr = item.split('--')
+    //         return { label: tempArr[1], value: tempArr[0] }
+    //       })
+    //       break
+
+    //     case 1:
+    //       this.zrx = res.codeLabels
+    //       this.zrxOtpions = resQueryModelNodeArr.map(item => {
+    //         let tempArr = item.split('--')
+    //         return { label: tempArr[1], value: tempArr[0] }
+    //       })
+    //       break
+
+    //     case 2:
+    //       this.xyxybzx = res.codeLabels
+    //       this.xyxhbzxOtpions = resQueryModelNodeArr.map(item => {
+    //         let tempArr = item.split('--')
+    //         return { label: tempArr[1], value: tempArr[0] }
+    //       })
+    //       break
+
+    //     case 3:
+    //       this.sx = res.codeLabels
+    //       this.sxOtpions = resQueryModelNodeArr.map(item => {
+    //         let tempArr = item.split('--')
+    //         return { label: tempArr[1], value: tempArr[0] }
+    //       })
+    //       break
+
+    //     case 4:
+    //       this.gcgz = res.codeLabels
+    //       this.gcgzOtpions = resQueryModelNodeArr.map(item => {
+    //         let tempArr = item.split('--')
+    //         return { label: tempArr[1], value: tempArr[0] }
+    //       })
+    //       break
+
+    //     case 5:
+    //       this.yjx = res.codeLabels
+    //       this.yjxOtpions = resQueryModelNodeArr.map(item => {
+    //         let tempArr = item.split('--')
+    //         return { label: tempArr[1], value: tempArr[0] }
+    //       })
+    //       break
+
+    //     case 6:
+    //       this.nx = res.codeLabels
+    //       this.nxOtpions = resQueryModelNodeArr.map(item => {
+    //         let tempArr = item.split('--')
+    //         return { label: tempArr[1], value: tempArr[0] }
+    //       })
+    //       break
+
+    //     default:
+    //       break
+    //   }
+    // })
+    // 数据查询
+    // dualCorePermissions({
+    //   'actionType': 'oaAutoLoad',
+    //   'docCreator': getToken('oaAuto-Token').docCreator,
+    //   // 'fdid': getToken('oaAuto-Token').fdid,
+    //   'fdDocId': getToken('oaAuto-Token').fdid,
+    //   // 'fdDocId': '18190132a35809421c49a72473db86ef',
+    //   'docStatus': '20'
+    // }).then(res => {
+    //   this.tableDisable = res.docStatus
+    //   this.results = res.codeValues
+    //   this.results.forEach(item => {
+    //     this.queryLevel(item)
+    //   })
+    // })
+    // ********************************************************************************************************
     // 企工特模板
     dualCorePermissions({
       'fieldValue': 'qgt',
